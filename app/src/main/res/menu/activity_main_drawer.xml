@@ -5,21 +5,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Im" />
+            android:id="@+id/resumen_general"
+            android:title="Resumen General ABC" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/ejecucion_regional"
+            android:title="Ejecución por Regional" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/ejecucion_proyecto"
+            android:title="Ejecución por Proyecto" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/proyectos_priorizados"
+            android:title="Proyectos Priorizados" />
     </group>
 
 </menu>
