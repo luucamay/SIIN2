@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://192.168.4.20:80/rest_ejecucion/API/ejecucion/ejecucion.php";
+        String url ="https://192.168.4.20:80/rest_ejecucion/API/ejecucion/ejecucion.php";
         //String url ="http://138.197.154.220/my-jallupredix-project/index.php/estaciones";
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
