@@ -18,8 +18,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,25 +50,37 @@ public class MainActivity extends AppCompatActivity
         final TextView mTextView = (TextView) findViewById(R.id.mtextView);
 
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://192.168.4.20:80/rest_ejecucion/API/ejecucion/ejecucion.php";
-        //String url ="http://138.197.154.220/my-jallupredix-project/index.php/estaciones";
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+
+        //String url ="http://138.197.154.220/jsonABC.html";
+        //String url ="https://192.168.4.20:80/rest_ejecucion/API/ejecucion/ejecucion.php";
+        String url ="http://138.197.154.220/my-jallupredix-project/index.php/estaciones";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
                     @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        mTextView.setText("Salida: "+ response.substring(0,500));
+                    public void onResponse(JSONObject response) {
+                        mTextView.setText("Response: " + response.toString());
+                        try {
+                            String str_value=response.getString("status");
+                            mTextView.setText("Response: " + str_value);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //String test = (String) response.get("name");
                     }
                 }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mTextView.setText("Eso no funcionó");
-            }
-        });
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
 
     }
 

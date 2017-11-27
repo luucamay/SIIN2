@@ -16,6 +16,9 @@
         <item
             android:id="@+id/proyectos_priorizados"
             android:title="Proyectos Priorizados" />
+        <item
+            android:id="@+id/mapa"
+            android:title="Mapa" />
     </group>
 
 </menu>
