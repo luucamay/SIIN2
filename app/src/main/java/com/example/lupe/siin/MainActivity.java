@@ -40,15 +40,27 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    /*
+    CODIGO PARA PERMITIR QUE SE CONECTE A PESAR DE LOS CERTIFICADOS NO FIRMADOS
+    // Verifier that verifies all hosts
+    private static final HostnameVerifier DUMMY_VERIFIER = new HostnameVerifier() {
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    };
+    */
 
     /** Tag for the log messages */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     /** URL to query the dataset for information */
     private static final String SIIN_REQUEST_URL =
-            "https://siin.abc.gob.bo/rest_ejecucion/API/ejecucion/ejecucion.php";
+            "http://siin.abc.gob.bo/rest_ejecucion/API/ejecucion/ejecucion.php";
 
 
     @Override
@@ -72,8 +84,6 @@ public class MainActivity extends AppCompatActivity
         // Kick off an {@link AsyncTask} to perform the network request
         SiinAsyncTask task = new SiinAsyncTask();
         task.execute();
-        final TextView mTextView = (TextView) findViewById(R.id.mtextView);
-
 
     }
 
@@ -145,9 +155,27 @@ public class MainActivity extends AppCompatActivity
      * Update the screen to display information from the given {@link EjecucionPresupuesto}.
      */
     private void updateUi(EjecucionPresupuesto ejecucionPresupuesto) {
-        TextView titleTextView = (TextView) findViewById(R.id.mtextView);
-        titleTextView.setText(ejecucionPresupuesto.fecha);
+        //TextView titleTextView = (TextView) findViewById(R.id.mtextView);
+        // .setText(ejecucionPresupuesto.fecha);
+        TextView mfecha = (TextView) findViewById(R.id.mfecha);
+        TextView mprogramado_devengado = (TextView) findViewById(R.id.programado_devengado);
+        TextView mreprogramado_devengado = (TextView) findViewById(R.id.reprogramado_devengado);
+        TextView mpresupuesto_aprobado_devengado = (TextView) findViewById(R.id.presupuesto_aprobado_devengado);
+        TextView mpresupuesto_vigente_devengado = (TextView) findViewById(R.id.presupuesto_vigente_devengado);
+        TextView mprogramado_pagado = (TextView) findViewById(R.id.programado_pagado);
+        TextView mreprogramado_pagado = (TextView) findViewById(R.id.reprogramado_pagado);
+        TextView mpresupuesto_aprobado_pagado = (TextView) findViewById(R.id.presupuesto_aprobado_pagado);
+        TextView mpresupuesto_vigente_pagado = (TextView) findViewById(R.id.presupuesto_vigente_pagado);
 
+        mfecha.setText(ejecucionPresupuesto.fecha);
+        mprogramado_devengado.setText(ejecucionPresupuesto.programado_devengado);
+        mreprogramado_devengado.setText(ejecucionPresupuesto.reprogramado_devengado);
+        mpresupuesto_aprobado_devengado.setText(ejecucionPresupuesto.presupuesto_aprobado_devengado);
+        mpresupuesto_vigente_devengado.setText(ejecucionPresupuesto.presupuesto_vigente_devengado);
+        mprogramado_pagado.setText(ejecucionPresupuesto.programado_pagado);
+        mreprogramado_pagado.setText(ejecucionPresupuesto.reprogramado_pagado);
+        mpresupuesto_aprobado_pagado.setText(ejecucionPresupuesto.presupuesto_aprobado_pagado);
+        mpresupuesto_vigente_pagado.setText(ejecucionPresupuesto.presupuesto_vigente_pagado);
 
     }
     /**
