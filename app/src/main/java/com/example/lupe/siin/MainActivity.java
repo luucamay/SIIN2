@@ -145,12 +145,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.proyectos_priorizados) {
 
-        } else if (id == R.id.mapa){
-            Intent intent = new Intent(this, MapaActivity.class);
-            startActivity(intent);
-
         } else if (id == R.id.maps){
-            Intent intent = new Intent(this, MapaActivity.class);
+            Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
 
         }
