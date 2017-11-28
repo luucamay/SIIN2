@@ -44,6 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.getUiSettings().setZoomGesturesEnabled(true);
 
+        LatLng cochabamba = new LatLng(-17.396013, -66.163534);
         LatLng uno = new LatLng(-15.65, -69.12);
         LatLng dos = new LatLng(-16.58, -68.185);
         LatLng tres = new LatLng(-14.5614, -64.3853);
@@ -57,7 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng once = new LatLng(-17, -63.1123);
         LatLng doce = new LatLng(-17, -63);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(uno));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cochabamba,5));
+
         mMap.addMarker(new MarkerOptions().position(uno)
                 .title("Proyecto:"));
         mMap.addMarker(new MarkerOptions().position(dos)
