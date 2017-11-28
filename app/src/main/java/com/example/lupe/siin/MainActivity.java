@@ -175,15 +175,15 @@ public class MainActivity extends AppCompatActivity
         TextView mpresupuesto_aprobado_pagado = (TextView) findViewById(R.id.presupuesto_aprobado_pagado);
         TextView mpresupuesto_vigente_pagado = (TextView) findViewById(R.id.presupuesto_vigente_pagado);
 
-        mfecha.setText(ejecucionPresupuesto.fecha);
-        mprogramado_devengado.setText(ejecucionPresupuesto.programado_devengado);
-        mreprogramado_devengado.setText(ejecucionPresupuesto.reprogramado_devengado);
-        mpresupuesto_aprobado_devengado.setText(ejecucionPresupuesto.presupuesto_aprobado_devengado);
-        mpresupuesto_vigente_devengado.setText(ejecucionPresupuesto.presupuesto_vigente_devengado);
-        mprogramado_pagado.setText(ejecucionPresupuesto.programado_pagado);
-        mreprogramado_pagado.setText(ejecucionPresupuesto.reprogramado_pagado);
-        mpresupuesto_aprobado_pagado.setText(ejecucionPresupuesto.presupuesto_aprobado_pagado);
-        mpresupuesto_vigente_pagado.setText(ejecucionPresupuesto.presupuesto_vigente_pagado);
+        mfecha.setText(ejecucionPresupuesto.fecha+" %");
+        mprogramado_devengado.setText(ejecucionPresupuesto.programado_devengado+" %");
+        mreprogramado_devengado.setText(ejecucionPresupuesto.reprogramado_devengado+" %");
+        mpresupuesto_aprobado_devengado.setText(ejecucionPresupuesto.presupuesto_aprobado_devengado+" %");
+        mpresupuesto_vigente_devengado.setText(ejecucionPresupuesto.presupuesto_vigente_devengado+" %");
+        mprogramado_pagado.setText(ejecucionPresupuesto.programado_pagado+" %");
+        mreprogramado_pagado.setText(ejecucionPresupuesto.reprogramado_pagado+" %");
+        mpresupuesto_aprobado_pagado.setText(ejecucionPresupuesto.presupuesto_aprobado_pagado+" %");
+        mpresupuesto_vigente_pagado.setText(ejecucionPresupuesto.presupuesto_vigente_pagado+" %");
 
     }
     /**
