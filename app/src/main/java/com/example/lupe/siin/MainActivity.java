@@ -39,6 +39,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
@@ -84,6 +86,16 @@ public class MainActivity extends AppCompatActivity
         // Kick off an {@link AsyncTask} to perform the network request
         SiinAsyncTask task = new SiinAsyncTask();
         task.execute();
+
+        Timer timer = new Timer ();
+        TimerTask hourlyTask = new TimerTask () {
+            @Override
+            public void run () {
+                SiinAsyncTask task = new SiinAsyncTask();
+                task.execute();
+            }
+        };
+        timer.schedule (hourlyTask, 0l, 1000*60*60);
 
     }
 
