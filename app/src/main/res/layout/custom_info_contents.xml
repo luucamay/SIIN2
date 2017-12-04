@@ -11,7 +11,7 @@
         android:id="@+id/imageInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/info_image"
+        android:src="@mipmap/img_proyecto"
         android:background="@drawable/ic_launcher_background" />
 
     <TextView
@@ -21,19 +21,26 @@
         android:text="Nombre de proyecto"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <TextView
-        android:id="@+id/textLat"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lat: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textLon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lon: "
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Ficha técnica"
+            android:onClick="openficha"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Seguimiento"
+            android:onClick="openseguimiento"/>
+    </LinearLayout>
 
 
 </LinearLayout>
