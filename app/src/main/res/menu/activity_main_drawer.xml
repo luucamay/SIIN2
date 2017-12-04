@@ -20,8 +20,11 @@
             android:id="@+id/maps"
             android:title="Mapa" />
         <item
+            android:id="@+id/shapes_old"
+            android:title="No entrar" />
+        <item
             android:id="@+id/shapes"
-            android:title="Tramos" />
+            android:title="Shapes" />
     </group>
 
 </menu>

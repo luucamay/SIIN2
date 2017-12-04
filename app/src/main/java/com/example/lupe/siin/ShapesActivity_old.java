@@ -104,7 +104,7 @@ public class ShapesActivity_old extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shapes);
+        setContentView(R.layout.activity_shapes_old);
 
         mHueBar = (SeekBar) findViewById(R.id.hueSeekBar);
         mHueBar.setMax(MAX_HUE_DEGREES);
