@@ -36,14 +36,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Actualizado al 24/11/2017"
+            android:text="Actualizado al "
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/mtextView"
-            android:layout_width="match_parent"
+            android:id="@+id/mfecha"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"/>
+            android:gravity="center_horizontal|center"
+            android:text="Esperando datos..." />
 
     </LinearLayout>
 
@@ -101,7 +102,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/programado_devengado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=" 21.57 %" />
@@ -123,7 +124,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/reprogramado_devengado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="17.20 %" />
@@ -142,7 +143,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/titles"
-                android:text="Ejecución Mensual"
+                android:text="Ejecución Acumulada"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -157,12 +158,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/titles"
-                    android:text="Programado"
+                    android:text="Presupuesto Aprobado"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/presupuesto_aprobado_devengado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="62.08 %" />
@@ -179,12 +180,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/titles"
-                    android:text="Reprogramado"
+                    android:text="Presupuesto Vigente"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/presupuesto_vigente_devengado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="55.56 %" />
@@ -248,7 +249,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/programado_pagado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="57.68 %" />
@@ -270,7 +271,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView19"
+                    android:id="@+id/reprogramado_pagado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="46.00 %" />
@@ -289,7 +290,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/titles"
-                android:text="Ejecución Mensual"
+                android:text="Ejecución Acumulada"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -304,12 +305,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/titles"
-                    android:text="Programado"
+                    android:text="Presupuesto Aprobado"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView22"
+                    android:id="@+id/presupuesto_aprobado_pagado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=" 60.87 %" />
@@ -326,12 +327,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/titles"
-                    android:text="Reprogramado"
+                    android:text="Presupuesto Vigente"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView24"
+                    android:id="@+id/presupuesto_vigente_pagado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="54.57 %" />

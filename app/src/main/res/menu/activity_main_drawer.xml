@@ -17,8 +17,11 @@
             android:id="@+id/proyectos_priorizados"
             android:title="Proyectos Priorizados" />
         <item
-            android:id="@+id/mapa"
+            android:id="@+id/maps"
             android:title="Mapa" />
+        <item
+            android:id="@+id/shapes"
+            android:title="Tramos" />
     </group>
 
 </menu>
