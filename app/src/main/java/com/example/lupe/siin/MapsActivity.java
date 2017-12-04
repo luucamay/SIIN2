@@ -41,7 +41,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap = googleMap;
         mMap.getUiSettings().setZoomGesturesEnabled(true);
 
         LatLng cochabamba = new LatLng(-17.396013, -66.163534);
@@ -84,6 +83,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .title("Proyecto:"));
         mMap.addMarker(new MarkerOptions().position(doce)
                 .title("Proyecto:"));
+
+
+
 
 
         // Setting a custom info window adapter for the google map

@@ -19,6 +19,9 @@
         <item
             android:id="@+id/maps"
             android:title="Mapa" />
+        <item
+            android:id="@+id/shapes"
+            android:title="Tramos" />
     </group>
 
 </menu>

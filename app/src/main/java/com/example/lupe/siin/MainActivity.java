@@ -149,6 +149,10 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
 
+        } else if (id == R.id.shapes){
+            Intent intent = new Intent(this, ShapesActivity.class);
+            startActivity(intent);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -175,7 +179,7 @@ public class MainActivity extends AppCompatActivity
         TextView mpresupuesto_aprobado_pagado = (TextView) findViewById(R.id.presupuesto_aprobado_pagado);
         TextView mpresupuesto_vigente_pagado = (TextView) findViewById(R.id.presupuesto_vigente_pagado);
 
-        mfecha.setText(ejecucionPresupuesto.fecha+" %");
+        mfecha.setText(ejecucionPresupuesto.fecha);
         mprogramado_devengado.setText(ejecucionPresupuesto.programado_devengado+" %");
         mreprogramado_devengado.setText(ejecucionPresupuesto.reprogramado_devengado+" %");
         mpresupuesto_aprobado_devengado.setText(ejecucionPresupuesto.presupuesto_aprobado_devengado+" %");

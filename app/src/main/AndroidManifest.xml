@@ -48,6 +48,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.lupe.siin.MainActivity" />
         </activity>
+        <activity
+            android:name=".ShapesActivity"
+            android:label="@string/title_activity_shapes"></activity>
     </application>
 
 </manifest>
