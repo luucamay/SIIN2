@@ -16,7 +16,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
@@ -71,16 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng tarija = new LatLng(-20.43161611,-63.2848669);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tarija,5));
-
-        mMap.addMarker(new MarkerOptions().position(tarija)
-                .title("Proyecto: tarija"));
-
-        Polyline line = mMap.addPolyline(new PolylineOptions()
-                .add(new LatLng(-20.43161611,-63.2848669), new LatLng(-20.43676531,-63.28482948))
-                .width(35)
-                .color(Color.BLUE) );
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tarija,15));
 
         // Setting a custom info window adapter for the google map
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -111,6 +101,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return v;
             }
         });
+
+        // Kick off an {@link AsyncTask} to perform the network request
+        TramosAsyncTask task = new TramosAsyncTask();
+        task.execute();
 
     }
 
@@ -167,8 +161,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 //construir una linea
                 PolylineOptions polylineOptions = new PolylineOptions();
-                polylineOptions.addAll(tramo.coordenadas);
-                Log.i(LOG_TAG, "onPostExecute: ");
+                polylineOptions.addAll(tramo.coordenadas)
+                        .width(25)
+                        .color(Color.BLUE)
+                        .clickable(true);
                 mMap.addPolyline(polylineOptions);
                 //for(LatLng latLng : result)
                   //  mMap.addMarker(new MarkerOptions().position(latLng).title("Revamp 15,click on the arrow below for directions"));
@@ -289,7 +285,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int objectid_2 = propiedades.getInt("OBJECTID_2");
                 String poblacion = propiedades.getString("Pob");
                 String tramo = propiedades.getString("Tramo");
-                float shape_leng = (float) propiedades.getDouble("Shape_leng");
+                float shape_leng = (float) propiedades.getDouble("Shape_Leng");
                 String color = propiedades.getString("color");
                 int proyId = propiedades.getInt("proyId");
                 int idSubproyecto = propiedades.getInt("idSubproyecto");
@@ -299,7 +295,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         color,proyId,idSubproyecto);
 
             } catch (JSONException e) {
-                Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
+                Log.e(LOG_TAG, "Problem parseando los resultados JSON", e);
             }
             return null;
         }
