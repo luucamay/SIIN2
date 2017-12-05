@@ -20,11 +20,11 @@
             android:id="@+id/maps"
             android:title="Mapa" />
         <item
-            android:id="@+id/shapes_old"
-            android:title="No entrar" />
+            android:id="@+id/ficha"
+            android:title="Ficha Tecnica" />
         <item
-            android:id="@+id/shapes"
-            android:title="Shapes" />
+            android:id="@+id/seguimiento"
+            android:title="Seguimiento" />
     </group>
 
 </menu>

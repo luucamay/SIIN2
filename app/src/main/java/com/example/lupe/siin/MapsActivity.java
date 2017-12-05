@@ -1,7 +1,11 @@
 package com.example.lupe.siin;
 
-import android.support.v4.app.FragmentActivity;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,10 +16,32 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
+    /** Tag for the log messages */
+    public static final String LOG_TAG = MapsActivity.class.getSimpleName();
+    /** URL to query the dataset for information */
+    private static final String TRAMO_REQUEST_URL =
+            "http://abc.phuyu.me/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Atja01&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,49 +69,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.getUiSettings().setZoomGesturesEnabled(true);
 
-        LatLng cochabamba = new LatLng(-17.396013, -66.163534);
-        LatLng uno = new LatLng(-15.65, -69.12);
-        LatLng dos = new LatLng(-16.58, -68.185);
-        LatLng tres = new LatLng(-14.5614, -64.3853);
-        LatLng cuatro = new LatLng(-17.11, -67.68);
-        LatLng cinco = new LatLng(-17.54, -67.39);
-        LatLng seis = new LatLng(-17.54, -67.39);
-        LatLng siete = new LatLng(-14.09296, -64.3234);
-        LatLng ocho = new LatLng(-15.09296, -67.01561);
-        LatLng nueve = new LatLng(-14.35294, -64.52453);
-        LatLng diez = new LatLng(-15.5308, -63.1123);
-        LatLng once = new LatLng(-17, -63.1123);
-        LatLng doce = new LatLng(-17, -63);
+        LatLng tarija = new LatLng(-20.43161611,-63.2848669);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cochabamba,5));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tarija,5));
 
-        mMap.addMarker(new MarkerOptions().position(uno)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(dos)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(tres)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(cuatro)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(cinco)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(seis)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(siete)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(ocho)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(nueve)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(diez)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(once)
-                .title("Proyecto:"));
-        mMap.addMarker(new MarkerOptions().position(doce)
-                .title("Proyecto:"));
+        mMap.addMarker(new MarkerOptions().position(tarija)
+                .title("Proyecto: tarija"));
 
-
-
+        Polyline line = mMap.addPolyline(new PolylineOptions()
+                .add(new LatLng(-20.43161611,-63.2848669), new LatLng(-20.43676531,-63.28482948))
+                .width(35)
+                .color(Color.BLUE) );
 
 
         // Setting a custom info window adapter for the google map
@@ -96,7 +90,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public View getInfoWindow(Marker arg0) {
                 return null;
             }
-
 
             // Defines the contents of the InfoWindow
             @Override
@@ -118,6 +111,197 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return v;
             }
         });
+
     }
 
+    /**
+     * Update the screen to display information from the given {@link EjecucionPresupuesto}.
+     */
+    private void updateUi(Tramo tramo) {
+        LatLng cochabamba = new LatLng(-17.396013, -66.163534);
+
+        mMap.addMarker(new MarkerOptions().position(cochabamba)
+                .title("Proyecto: CONSERVACION VIAL TRAMO TJ01: Boyuibe - Villa Montes - Yacuiba - Pocitos; Villa Montes - Hito Br94 "));
+    }
+
+    /* Desde aqui estoy llamando el json data de un tramo y su shape*/
+    /**
+     * {@link AsyncTask} to perform the network request on a background thread, and then
+     * update the UI with the first earthquake in the response.
+     */
+    private class TramosAsyncTask extends AsyncTask<URL, Void, Tramo> {
+
+        @Override
+        protected Tramo doInBackground(URL... urls) {
+            // Create URL object
+            URL url = createUrl(TRAMO_REQUEST_URL);
+
+            // Perform HTTP request to the URL and receive a JSON response back
+            String jsonResponse = "";
+            try {
+                jsonResponse = makeHttpRequest(url);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Problema al realizar la solicitud HTTP.", e);
+            }
+
+            // Extract relevant fields from the JSON response and create an {@link Event} object
+            Tramo tramo = extractFeatureFromJson(jsonResponse);
+
+            // Return the {@link Event} object as the result fo the {@link TsunamiAsyncTask}
+            return tramo;
+        }
+
+        /**
+         * Update the screen with the given earthquake (which was the result of the
+         * {@link MainActivity.SiinAsyncTask}).
+         */
+        @Override
+        protected void onPostExecute(Tramo tramo) {
+            if (tramo == null) {
+                return;
+            }
+
+            try {
+                if (mMap == null) {
+
+                }
+                //construir una linea
+                PolylineOptions polylineOptions = new PolylineOptions();
+                polylineOptions.addAll(tramo.coordenadas);
+                Log.i(LOG_TAG, "onPostExecute: ");
+                mMap.addPolyline(polylineOptions);
+                //for(LatLng latLng : result)
+                  //  mMap.addMarker(new MarkerOptions().position(latLng).title("Revamp 15,click on the arrow below for directions"));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //updateUi(tramo);
+
+        }
+
+        /**
+         * Returns new URL object from the given string URL.
+         */
+        private URL createUrl(String stringUrl) {
+            URL url = null;
+            try {
+                url = new URL(stringUrl);
+            } catch (MalformedURLException exception) {
+                Log.e(LOG_TAG, "Error al crear URL", exception);
+                return null;
+            }
+            return url;
+        }
+
+        /**
+         * Make an HTTP request to the given URL and return a String as the response.
+         */
+        private String makeHttpRequest(URL url) throws IOException {
+            String jsonResponse = "";
+
+            // If the URL is null, then return early.
+            if (url == null) {
+                return jsonResponse;
+            }
+
+            HttpURLConnection urlConnection = null;
+            InputStream inputStream = null;
+            try {
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setReadTimeout(10000 /* milliseconds */);
+                urlConnection.setConnectTimeout(15000 /* milliseconds */);
+                urlConnection.connect();
+
+                // If the request was successful (response code 200),
+                // then read the input stream and parse the response.
+                if (urlConnection.getResponseCode() == 200) {
+                    inputStream = urlConnection.getInputStream();
+                    jsonResponse = readFromStream(inputStream);
+                } else {
+                    Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+                }
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Problema al obtener los JSON de Ejecucion del presupuesto.", e);
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (inputStream != null) {
+                    // function must handle java.io.IOException here
+                    inputStream.close();
+                }
+            }
+            return jsonResponse;
+        }
+
+        /**
+         * Convert the {@link InputStream} into a String which contains the
+         * whole JSON response from the server.
+         */
+        private String readFromStream(InputStream inputStream) throws IOException {
+            StringBuilder output = new StringBuilder();
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+                BufferedReader reader = new BufferedReader(inputStreamReader);
+                String line = reader.readLine();
+                while (line != null) {
+                    output.append(line);
+                    line = reader.readLine();
+                }
+            }
+            return output.toString();
+        }
+
+        /**
+         * Return an {@link Tramo} object by parsing out information
+         * about the first earthquake from the input earthquakeJSON string.
+         */
+        private Tramo extractFeatureFromJson(String tramoJSON) {
+            // If the JSON string is empty or null, then return early.
+            if (TextUtils.isEmpty(tramoJSON)) {
+                return null;
+            }
+
+            try {
+                JSONObject baseJsonResponse = new JSONObject(tramoJSON);
+                JSONArray features = baseJsonResponse.getJSONArray("features");
+                JSONObject shape = features.getJSONObject(0);
+                String id = shape.getString("id");
+                JSONObject geometry = shape.getJSONObject("geometry");
+                JSONObject propiedades = shape.getJSONObject("properties");
+
+                JSONArray coordenadasjson = geometry.getJSONArray("coordinates");
+                JSONArray coordenadascero = coordenadasjson.getJSONArray(0);
+                ArrayList<LatLng> latLngArrayList = new ArrayList<>();
+                for (int i = 0; i < coordenadascero.length(); i++) {
+                    JSONArray latitudlongitud = coordenadascero.getJSONArray(i);
+                    //objeto de latitud y longitud
+                    LatLng latLng = new LatLng(latitudlongitud.getDouble(1),latitudlongitud.getDouble(0));
+                    //ponerlo en un array de latlng
+                    latLngArrayList.add(latLng);
+                }
+
+                int objectid_1 = propiedades.getInt("OBJECTID_1");
+                int objectid = propiedades.getInt("OBJECTID");
+                float distancia =  (float) propiedades.getDouble("Distancia");;
+                int objectid_2 = propiedades.getInt("OBJECTID_2");
+                String poblacion = propiedades.getString("Pob");
+                String tramo = propiedades.getString("Tramo");
+                float shape_leng = (float) propiedades.getDouble("Shape_leng");
+                String color = propiedades.getString("color");
+                int proyId = propiedades.getInt("proyId");
+                int idSubproyecto = propiedades.getInt("idSubproyecto");
+
+                // Create a new {@link Event} object
+                return new Tramo(id,latLngArrayList,objectid_1,objectid,distancia,objectid_2,poblacion,tramo,shape_leng,
+                        color,proyId,idSubproyecto);
+
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
+            }
+            return null;
+        }
+    }
 }

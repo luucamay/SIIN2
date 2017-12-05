@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Este es el que controla el contenido de la pantalla
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -133,11 +134,11 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.shapes_old){
-            /*Intent intent = new Intent(this, ShapesActivity_old.class);
-            startActivity(intent);*/
-        } else if (id == R.id.shapes) {
-            Intent intent = new Intent(this, ShapesActivity.class);
+        } else if (id == R.id.ficha){
+            Intent intent = new Intent(this, FichaActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.seguimiento){
+            Intent intent = new Intent(this, FichaActivity.class);
             startActivity(intent);
         }
 
