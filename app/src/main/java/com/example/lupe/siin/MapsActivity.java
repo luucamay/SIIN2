@@ -68,9 +68,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.getUiSettings().setZoomGesturesEnabled(true);
 
-        LatLng tarija = new LatLng(-20.43161611,-63.2848669);
+        LatLng centroBolivia = new LatLng(-17.141273, -64.397211);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(tarija,15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centroBolivia,5));
 
         // Setting a custom info window adapter for the google map
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -121,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /* Desde aqui estoy llamando el json data de un tramo y su shape*/
     /**
      * {@link AsyncTask} to perform the network request on a background thread, and then
-     * update the UI with the first earthquake in the response.
+     * update the UI with the first tramo in the response.
      */
     private class TramosAsyncTask extends AsyncTask<URL, Void, Tramo> {
 
@@ -141,12 +141,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // Extract relevant fields from the JSON response and create an {@link Event} object
             Tramo tramo = extractFeatureFromJson(jsonResponse);
 
-            // Return the {@link Event} object as the result fo the {@link TsunamiAsyncTask}
             return tramo;
         }
 
         /**
-         * Update the screen with the given earthquake (which was the result of the
+         * Update the screen with the given tramo (which was the result of the
          * {@link MainActivity.SiinAsyncTask}).
          */
         @Override
@@ -252,7 +251,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         /**
          * Return an {@link Tramo} object by parsing out information
-         * about the first earthquake from the input earthquakeJSON string.
+         * about the first tramo from the input tramoJSON string.
          */
         private Tramo extractFeatureFromJson(String tramoJSON) {
             // If the JSON string is empty or null, then return early.
@@ -263,7 +262,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             try {
                 JSONObject baseJsonResponse = new JSONObject(tramoJSON);
                 JSONArray features = baseJsonResponse.getJSONArray("features");
-                JSONObject shape = features.getJSONObject(0);
+                JSONObject shape = features.getJSONObject(1);
                 String id = shape.getString("id");
                 JSONObject geometry = shape.getJSONObject("geometry");
                 JSONObject propiedades = shape.getJSONObject("properties");
@@ -295,7 +294,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         color,proyId,idSubproyecto);
 
             } catch (JSONException e) {
-                Log.e(LOG_TAG, "Problem parseando los resultados JSON", e);
+                Log.e(LOG_TAG, "Problema parseando los resultados JSON", e);
             }
             return null;
         }
