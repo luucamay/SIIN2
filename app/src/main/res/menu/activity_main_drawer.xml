@@ -18,10 +18,7 @@
             android:title="Proyectos Priorizados" />
         <item
             android:id="@+id/maps"
-            android:title="Mapa" />
-        <item
-            android:id="@+id/mapsinfo"
-            android:title="Mapa Con Informacion Personalizada" />
+            android:title="Mapa Con Rutas y Puntos" />
         <item
             android:id="@+id/ficha"
             android:title="Ficha Tecnica" />

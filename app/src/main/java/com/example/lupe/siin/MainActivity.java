@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -129,17 +128,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.ejecucion_proyecto) {
 
-        } else if (id == R.id.proyectos_priorizados) {
-
-        } else if (id == R.id.mapsinfo){
-            //main_content
-            BlankFragment mapFragmentActivity = new BlankFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction()
-                    .replace(R.id.constraintmainlayout,mapFragmentActivity,mapFragmentActivity.getTag())
-                    .commit();
-
-        }else if (id == R.id.maps){
+        } else if (id == R.id.maps){
             Intent intent = new Intent(this, MapFragmentActivity.class);
             startActivity(intent);
 

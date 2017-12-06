@@ -27,12 +27,12 @@ public class FormFragment extends Fragment {
 
         view.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Clicked on ficha", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Pronto informacion de ficha", Toast.LENGTH_SHORT).show();
             }
         });
         view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Clicked on seguimiento", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Pronto informacion de seguimiento", Toast.LENGTH_SHORT).show();
             }
         });
     }
