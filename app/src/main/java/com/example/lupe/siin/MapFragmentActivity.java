@@ -106,24 +106,66 @@ public class MapFragmentActivity
 
     @Override
     public void onWindowShowStarted(@NonNull InfoWindow infoWindow) {
-        Log.d("debug", "onWindowShowStarted: " + infoWindow);
+    //    Log.d("debug", "onWindowShowStarted: " + infoWindow);
     }
 
     @Override
     public void onWindowShown(@NonNull InfoWindow infoWindow) {
-        Log.d("debug", "onWindowShown: " + infoWindow);
+    //    Log.d("debug", "onWindowShown: " + infoWindow);
     }
 
     @Override
     public void onWindowHideStarted(@NonNull InfoWindow infoWindow) {
-        Log.d("debug", "onWindowHideStarted: " + infoWindow);
+    //    Log.d("debug", "onWindowHideStarted: " + infoWindow);
     }
 
     @Override
     public void onWindowHidden(@NonNull InfoWindow infoWindow) {
-        Log.d("debug", "onWindowHidden: " + infoWindow);
+    //    Log.d("debug", "onWindowHidden: " + infoWindow);
     }
+    private void updateUi(Tramo tramo) {
+        //aca se asigna los datos del objeto java al info view
+        /*TextView midTramo = (TextView) findViewById(R.id.idTramo);
+        TextView mobjectId1 = (TextView) findViewById(R.id.objectid_1);
+        TextView mobjectId = (TextView) findViewById(R.id.objectid);
+        TextView mdistancia = (TextView) findViewById(R.id.distancia);
+        TextView mobjectId2 = (TextView) findViewById(R.id.objectid_2);
+        TextView mpoblacion = (TextView) findViewById(R.id.poblacion);
+        TextView mtramo = (TextView) findViewById(R.id.tramo);
+        TextView mshapeLeng = (TextView) findViewById(R.id.shapeLeng);
+        TextView mproyId = (TextView) findViewById(R.id.proyId);
+        TextView midSubproyecto = (TextView) findViewById(R.id.idSubproyecto);
+        midTramo.setText(tramo.id);
+        mobjectId.setText(tramo.OBJECTID);
+        mobjectId1.setText(tramo.OBJECTID_1);
+        mobjectId2.setText(tramo.OBJECTID_2);
+        mdistancia.setText(""+tramo.Distancia);
+        mpoblacion.setText(tramo.Poblacion);
+        mtramo.setText(tramo.Tramo);
+        mshapeLeng.setText(""+tramo.Shape_Leng);
+        mproyId.setText(tramo.proyId);
+        midSubproyecto.setText(tramo.idSubproyecto);
+*/
+        Log.d("debug", "updateUI: " + tramo.id+" "+tramo.Distancia+" "+tramo.Poblacion+" "+tramo.proyId+" "+tramo.idSubproyecto);
 
+
+        try {
+            if (mMap == null) {
+
+            }
+            //construir una linea
+            PolylineOptions polylineOptions = new PolylineOptions();
+            polylineOptions.addAll(tramo.coordenadas)
+                    .width(25)
+                    .color(Color.parseColor("#"+tramo.color))
+                    .clickable(true);
+            mMap.addPolyline(polylineOptions);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     private class TramosAsyncTask extends AsyncTask<URL, Void, Tramo> {
 
         @Override
@@ -154,23 +196,7 @@ public class MapFragmentActivity
             if (tramo == null) {
                 return;
             }
-
-            try {
-                if (mMap == null) {
-
-                }
-                //construir una linea
-                PolylineOptions polylineOptions = new PolylineOptions();
-                polylineOptions.addAll(tramo.coordenadas)
-                        .width(25)
-                        .color(Color.BLUE)
-                        .clickable(true);
-                mMap.addPolyline(polylineOptions);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //updateUi(tramo);
+            updateUi(tramo);
 
         }
 

@@ -10,7 +10,7 @@ public class SeguimientoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seguimiento);
-        WebView myWebView = (WebView) findViewById(R.id.webview);
+        WebView myWebView = (WebView) findViewById(R.id.webviewSeguimiento);
         myWebView.loadUrl("http://siin.abc.gob.bo/rest_ejecucion/API/resumen/seguimiento.php");
     }
 }

@@ -1,12 +1,12 @@
 package com.example.lupe.siin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 public class FormFragment extends Fragment {
     @Nullable
@@ -27,12 +27,16 @@ public class FormFragment extends Fragment {
 
         view.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Pronto informacion de ficha", Toast.LENGTH_SHORT).show();
+                //haciendo un intent para abrir otra activity
+                Intent intent = new Intent(getContext(),FichaActivity.class);
+                startActivity(intent);
+
             }
         });
         view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Pronto informacion de seguimiento", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(),SeguimientoActivity.class);
+                startActivity(intent);
             }
         });
     }

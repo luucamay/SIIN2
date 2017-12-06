@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, FichaActivity.class);
             startActivity(intent);
         } else if (id == R.id.seguimiento){
-            Intent intent = new Intent(this, FichaActivity.class);
+            Intent intent = new Intent(this, SeguimientoActivity.class);
             startActivity(intent);
         }
 

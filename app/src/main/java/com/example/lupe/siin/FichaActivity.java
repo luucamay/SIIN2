@@ -10,7 +10,7 @@ public class FichaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ficha);
-        WebView myWebView = (WebView) findViewById(R.id.webview);
+        WebView myWebView = (WebView) findViewById(R.id.webviewFicha);
         myWebView.loadUrl("http://siin.abc.gob.bo/rest_ejecucion/API/resumen/ficha.php");
     }
 }

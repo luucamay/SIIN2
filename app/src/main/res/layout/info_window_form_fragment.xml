@@ -5,17 +5,62 @@
                 android:padding="16dp">
 
     <TextView
-        android:id="@+id/editTextFormInfoWindow"
+        android:id="@+id/idTramo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/idTramo"
         android:text="@string/infoWindowTextView"/>
+    <TextView
+        android:id="@+id/objectid_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idTramo"/>
+    <TextView
+        android:id="@+id/objectid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/objectid_1"/>
+    <TextView
+        android:id="@+id/distancia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/objectid"/>
+    <TextView
+        android:id="@+id/objectid_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/distancia"/>
+    <TextView
+        android:id="@+id/poblacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/objectid_2"/>
+    <TextView
+        android:id="@+id/tramo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/poblacion"/>
+    <TextView
+        android:id="@+id/shapeLeng"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tramo"/>
+    <TextView
+        android:id="@+id/proyId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shapeLeng"/>
+    <TextView
+        android:id="@+id/idSubproyecto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/proyId"/>
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextFormInfoWindow"
+        android:layout_below="@id/idSubproyecto"
         android:layout_alignParentLeft="true"
         android:text="@string/ficha"/>
 
@@ -23,7 +68,7 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextFormInfoWindow"
+        android:layout_below="@id/idSubproyecto"
         android:layout_alignParentRight="true"
         android:text="@string/seguimiento"/>
 
