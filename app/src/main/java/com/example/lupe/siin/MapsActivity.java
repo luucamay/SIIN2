@@ -165,8 +165,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .color(Color.BLUE)
                         .clickable(true);
                 mMap.addPolyline(polylineOptions);
-                //for(LatLng latLng : result)
-                  //  mMap.addMarker(new MarkerOptions().position(latLng).title("Revamp 15,click on the arrow below for directions"));
 
             } catch (Exception e) {
                 e.printStackTrace();

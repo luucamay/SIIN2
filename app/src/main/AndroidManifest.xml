@@ -51,8 +51,9 @@
         <activity
             android:name=".ShapesActivity"
             android:label="@string/title_activity_shapes" />
+        <activity android:name=".MapFragmentActivity" />
         <activity android:name=".FichaActivity" />
-        <activity android:name=".SeguimientoActivity"></activity>
+        <activity android:name=".SeguimientoActivity" />
     </application>
 
 </manifest>
