@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +40,13 @@ import javax.net.ssl.X509TrustManager;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    /** Tag for the log messages */
+    public static final String LOG_TAG = MainActivity.class.getSimpleName();
+    /** URL to query the dataset for information */
+    private static final String SIIN_REQUEST_URL =
+            "http://siin.abc.gob.bo/rest_ejecucion/API/ejecucion/ejecucion.php";
+
+    private SwipeRefreshLayout swipeContainer;
     /*
     CODIGO PARA PERMITIR QUE SE CONECTE A PESAR DE LOS CERTIFICADOS NO FIRMADOS
     */
@@ -80,13 +88,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /** Tag for the log messages */
-    public static final String LOG_TAG = MainActivity.class.getSimpleName();
-    /** URL to query the dataset for information */
-    private static final String SIIN_REQUEST_URL =
-            "http://siin.abc.gob.bo/rest_ejecucion/API/ejecucion/ejecucion.php";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,18 +111,23 @@ public class MainActivity extends AppCompatActivity
         SiinAsyncTask task = new SiinAsyncTask();
         task.execute();
 
-        /* Este bloque de codigo hace que se llame al AsyncTask cada 10 minutos
-        Timer timer = new Timer ();
-        TimerTask hourlyTask = new TimerTask () {
+        //Como se ejecuta el método on swipe scrolling
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
             @Override
-            public void run () {
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
                 SiinAsyncTask task = new SiinAsyncTask();
                 task.execute();
             }
-        };
-        timer.schedule (hourlyTask, 0l, 1000*60*60);
-        */
 
+        });
     }
 
     @Override
@@ -243,6 +249,10 @@ public class MainActivity extends AppCompatActivity
             }
 
             updateUi(ejecucionPresupuesto);
+
+            swipeContainer.setRefreshing(false);
+            Log.d("debug", "AsyncTask: post execute datos refrescados ");
+
         }
 
         /**
