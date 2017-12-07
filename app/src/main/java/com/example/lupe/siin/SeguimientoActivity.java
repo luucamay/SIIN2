@@ -1,8 +1,12 @@
 package com.example.lupe.siin;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.net.http.SslError;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class SeguimientoActivity extends AppCompatActivity {
 
@@ -11,6 +15,14 @@ public class SeguimientoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seguimiento);
         WebView myWebView = (WebView) findViewById(R.id.webviewSeguimiento);
+        final Activity activity = this;
+        myWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed(); // Ignore SSL certificate errors
+            }
+        });
+
         myWebView.loadUrl("http://siin.abc.gob.bo/rest_ejecucion/API/resumen/seguimiento.php");
     }
 }

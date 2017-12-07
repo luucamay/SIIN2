@@ -19,12 +19,6 @@
         <item
             android:id="@+id/maps"
             android:title="Mapa Con Rutas y Puntos" />
-        <item
-            android:id="@+id/ficha"
-            android:title="Ficha Tecnica" />
-        <item
-            android:id="@+id/seguimiento"
-            android:title="Seguimiento" />
     </group>
 
 </menu>
