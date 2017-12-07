@@ -3,33 +3,20 @@ package com.example.lupe.siin;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,24 +26,59 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     /*
     CODIGO PARA PERMITIR QUE SE CONECTE A PESAR DE LOS CERTIFICADOS NO FIRMADOS
-    // Verifier that verifies all hosts
-    private static final HostnameVerifier DUMMY_VERIFIER = new HostnameVerifier() {
+    */
+
+    // always verify the host - dont check for certificate
+    final static HostnameVerifier DO_NOT_VERIFY = new HostnameVerifier() {
         public boolean verify(String hostname, SSLSession session) {
             return true;
         }
     };
-    */
+
+    /**
+     * Trust every server - dont check for any certificate
+     */
+    private static void trustAllHosts() {
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[] {};
+            }
+
+            public void checkClientTrusted(X509Certificate[] chain,
+                                           String authType) throws CertificateException {
+            }
+
+            public void checkServerTrusted(X509Certificate[] chain,
+                                           String authType) throws CertificateException {
+            }
+        } };
+
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection
+                    .setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /** Tag for the log messages */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -78,6 +100,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Este es el que controla el contenido de la pantalla
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -87,6 +110,7 @@ public class MainActivity extends AppCompatActivity
         SiinAsyncTask task = new SiinAsyncTask();
         task.execute();
 
+        /* Este bloque de codigo hace que se llame al AsyncTask cada 10 minutos
         Timer timer = new Timer ();
         TimerTask hourlyTask = new TimerTask () {
             @Override
@@ -96,6 +120,7 @@ public class MainActivity extends AppCompatActivity
             }
         };
         timer.schedule (hourlyTask, 0l, 1000*60*60);
+        */
 
     }
 
@@ -143,16 +168,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.ejecucion_proyecto) {
 
-        } else if (id == R.id.proyectos_priorizados) {
-
         } else if (id == R.id.maps){
-            Intent intent = new Intent(this, MapsActivity.class);
+            Intent intent = new Intent(this, MapFragmentActivity.class);
             startActivity(intent);
-
-        } else if (id == R.id.shapes){
-            Intent intent = new Intent(this, ShapesActivity.class);
-            startActivity(intent);
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -167,8 +185,6 @@ public class MainActivity extends AppCompatActivity
      * Update the screen to display information from the given {@link EjecucionPresupuesto}.
      */
     private void updateUi(EjecucionPresupuesto ejecucionPresupuesto) {
-        //TextView titleTextView = (TextView) findViewById(R.id.mtextView);
-        // .setText(ejecucionPresupuesto.fecha);
         TextView mfecha = (TextView) findViewById(R.id.mfecha);
         TextView mprogramado_devengado = (TextView) findViewById(R.id.programado_devengado);
         TextView mreprogramado_devengado = (TextView) findViewById(R.id.reprogramado_devengado);
@@ -256,8 +272,30 @@ public class MainActivity extends AppCompatActivity
 
             HttpURLConnection urlConnection = null;
             InputStream inputStream = null;
+
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
+
+                boolean redirect = false;
+
+                // normally, 3xx is redirect
+                int status = urlConnection.getResponseCode();
+                if (status != HttpURLConnection.HTTP_OK) {
+                    if (status == HttpURLConnection.HTTP_MOVED_TEMP
+                            || status == HttpURLConnection.HTTP_MOVED_PERM
+                            || status == HttpURLConnection.HTTP_SEE_OTHER)
+                        redirect = true;
+                }
+
+                if (redirect) {
+                    // get redirect url from "location" header field
+                    String newUrl = urlConnection.getHeaderField("Location");
+                    // open the new connnection again
+                    trustAllHosts();
+                    HttpsURLConnection https = (HttpsURLConnection) new URL(newUrl).openConnection();
+                    https.setHostnameVerifier(DO_NOT_VERIFY);
+                    urlConnection = https;
+                }
                 urlConnection.setRequestMethod("GET");
                 urlConnection.setReadTimeout(10000 /* milliseconds */);
                 urlConnection.setConnectTimeout(15000 /* milliseconds */);

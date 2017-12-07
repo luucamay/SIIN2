@@ -31,4 +31,12 @@
     <string name="pattern_dashed">Dashed</string>
     <string name="pattern_mixed">Mixed</string>
 
+    <!-- strings para el custom info view-->
+
+    <string name="infoWindowTextView">Proyecto: TJ01</string>
+    <string name="ficha">Ficha</string>
+    <string name="seguimiento">Seguimiento</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
