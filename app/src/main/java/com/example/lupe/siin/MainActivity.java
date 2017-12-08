@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // Made by lupe
-
+/*
         // Kick off an {@link AsyncTask} to perform the network request
         SiinAsyncTask task = new SiinAsyncTask();
         task.execute();
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
                 task.execute();
             }
 
-        });
+        });*/
     }
 
     @Override
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity
             EjecucionFragment ejecucionFragment = new EjecucionFragment();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(R.id.constraintmainlayout,ejecucionFragment);
+            transaction.add(R.id.mainLayout,ejecucionFragment);
             transaction.addToBackStack(null);
             transaction.commit();
 
