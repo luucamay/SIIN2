@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,15 +96,15 @@ public class EjecucionFragment extends Fragment {
         // Made by lupe
 
         // Kick off an {@link AsyncTask} to perform the network request
-        //SiinAsyncTask task = new SiinAsyncTask();
-        //task.execute();
+        SiinAsyncTask task = new SiinAsyncTask();
+        task.execute();
 
         // Como se ejecuta el método on swipe scrolling
 
-        /* swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) container.findViewById(R.id.swipeContainer);
 
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
             public void onRefresh() {
@@ -126,15 +127,15 @@ public class EjecucionFragment extends Fragment {
      * Update the screen to display information from the given {@link EjecucionPresupuesto}.
      */
     private void updateUi(EjecucionPresupuesto ejecucionPresupuesto) {
-        /* TextView mfecha = (TextView) findViewById(R.id.mfecha);
-        TextView mprogramado_devengado = (TextView) findViewById(R.id.programado_devengado);
-        TextView mreprogramado_devengado = (TextView) findViewById(R.id.reprogramado_devengado);
-        TextView mpresupuesto_aprobado_devengado = (TextView) findViewById(R.id.presupuesto_aprobado_devengado);
-        TextView mpresupuesto_vigente_devengado = (TextView) findViewById(R.id.presupuesto_vigente_devengado);
-        TextView mprogramado_pagado = (TextView) findViewById(R.id.programado_pagado);
-        TextView mreprogramado_pagado = (TextView) findViewById(R.id.reprogramado_pagado);
-        TextView mpresupuesto_aprobado_pagado = (TextView) findViewById(R.id.presupuesto_aprobado_pagado);
-        TextView mpresupuesto_vigente_pagado = (TextView) findViewById(R.id.presupuesto_vigente_pagado);
+        TextView mfecha = (TextView) getView().findViewById(R.id.mfecha);
+        TextView mprogramado_devengado = (TextView) getView().findViewById(R.id.programado_devengado);
+        TextView mreprogramado_devengado = (TextView) getView().findViewById(R.id.reprogramado_devengado);
+        TextView mpresupuesto_aprobado_devengado = (TextView) getView().findViewById(R.id.presupuesto_aprobado_devengado);
+        TextView mpresupuesto_vigente_devengado = (TextView) getView().findViewById(R.id.presupuesto_vigente_devengado);
+        TextView mprogramado_pagado = (TextView) getView().findViewById(R.id.programado_pagado);
+        TextView mreprogramado_pagado = (TextView) getView().findViewById(R.id.reprogramado_pagado);
+        TextView mpresupuesto_aprobado_pagado = (TextView) getView().findViewById(R.id.presupuesto_aprobado_pagado);
+        TextView mpresupuesto_vigente_pagado = (TextView) getView().findViewById(R.id.presupuesto_vigente_pagado);
 
         mfecha.setText(ejecucionPresupuesto.fecha);
         mprogramado_devengado.setText(ejecucionPresupuesto.programado_devengado+" %");
@@ -145,7 +146,7 @@ public class EjecucionFragment extends Fragment {
         mreprogramado_pagado.setText(ejecucionPresupuesto.reprogramado_pagado+" %");
         mpresupuesto_aprobado_pagado.setText(ejecucionPresupuesto.presupuesto_aprobado_pagado+" %");
         mpresupuesto_vigente_pagado.setText(ejecucionPresupuesto.presupuesto_vigente_pagado+" %");
-        */
+
     }
 
     /**
@@ -156,6 +157,8 @@ public class EjecucionFragment extends Fragment {
 
         @Override
         protected EjecucionPresupuesto doInBackground(URL... urls) {
+
+
             // Create URL object
             URL url = createUrl(SIIN_REQUEST_URL);
 
@@ -186,7 +189,7 @@ public class EjecucionFragment extends Fragment {
 
             updateUi(ejecucionPresupuesto);
 
-            swipeContainer.setRefreshing(false);
+            //swipeContainer.setRefreshing(false);
             Log.d("debug", "AsyncTask: post execute datos refrescados ");
 
         }
