@@ -44,6 +44,7 @@
         <activity android:name=".MapFragmentActivity" />
         <activity android:name=".FichaActivity" />
         <activity android:name=".SeguimientoActivity" />
+        <activity android:name=".TramoActivity" />
     </application>
 
 </manifest>

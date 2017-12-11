@@ -41,4 +41,15 @@ public class Tramo {
         this.proyId = proyId;
         this.idSubproyecto = idSubproyecto;
     }
+
+    public String getTramo() {
+        return Tramo;
+    }
+
+    public String getId() {
+        return id;
+    }
+    public ArrayList<LatLng> getCoordenadas() {
+        return coordenadas;
+    }
 }

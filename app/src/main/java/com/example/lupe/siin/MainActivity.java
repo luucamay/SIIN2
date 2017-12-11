@@ -91,7 +91,8 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         } else if (id == R.id.ejecucion_regional) {
-
+            Intent intent = new Intent(this, TramoActivity.class);
+            startActivity(intent);
         } else if (id == R.id.ejecucion_proyecto) {
 
         } else if (id == R.id.maps){

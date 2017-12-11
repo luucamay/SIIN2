@@ -1,12 +1,9 @@
-/**
+package com.example.lupe.siin; /**
  * Created by lupe on 11/12/17.
  */
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-
-import com.example.lupe.siin.QueryUtils;
-import com.example.lupe.siin.Tramo;
 
 import java.util.List;
 
