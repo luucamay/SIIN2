@@ -94,7 +94,12 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, TramoActivity.class);
             startActivity(intent);
         } else if (id == R.id.ejecucion_proyecto) {
-
+            MapTramosFragment mapTramosFragment = new MapTramosFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.constraintmainlayout,mapTramosFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         } else if (id == R.id.maps){
             Intent intent = new Intent(this, MapFragmentActivity.class);
             startActivity(intent);
