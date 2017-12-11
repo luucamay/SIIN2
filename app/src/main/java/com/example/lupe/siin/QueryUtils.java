@@ -88,7 +88,7 @@ public final class QueryUtils {
     /**
      * Query the USGS dataset and return a list of {@link Tramo} objects.
      */
-    public static List<Tramo> fetchEarthquakeData(String requestUrl) {
+    public static List<Tramo> fetchTramoData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -100,10 +100,10 @@ public final class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        // Extract relevant fields from the JSON response and create a list of {@link Tramo}s
         List<Tramo> tramos = extractFeatureFromJson(jsonResponse);
 
-        // Return the list of {@link Earthquake}s
+        // Return the list of {@link Tramo}s
         return tramos;
     }
 
@@ -173,7 +173,7 @@ public final class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the tramo JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -227,7 +227,7 @@ public final class QueryUtils {
             JSONObject baseJsonResponse = new JSONObject(tramoJSON);
 
             // Extract the JSONArray associated with the key called "features",
-            // which represents a list of features (or earthquakes).
+            // which represents a list of features (or tramos).
             JSONArray tramoArray = baseJsonResponse.getJSONArray("features");
 
             // For each tramo in the tramoArray, create an {@link Tramo} object
@@ -275,7 +275,7 @@ public final class QueryUtils {
             // with the message from the exception.
             Log.e(LOG_TAG, "Problem parsing the tramo JSON results", e);
         }
-        // Return the list of earthquakes
+        // Return the list of tramos
         return tramos;
     }
 
