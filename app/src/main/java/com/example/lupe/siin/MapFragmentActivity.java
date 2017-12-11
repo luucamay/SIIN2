@@ -41,6 +41,7 @@ public class MapFragmentActivity
     public static final String LOG_TAG = MapFragmentActivity.class.getSimpleName();
     private static final String TRAMO_REQUEST_URL =
             "http://abc.phuyu.me/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Atja01&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature";
+    private static final int TRAMO_LOADER_ID = 1;
 
     private GoogleMap mMap;
     private InfoWindow formWindow;
