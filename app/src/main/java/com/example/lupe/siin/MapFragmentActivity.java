@@ -56,24 +56,9 @@ public class MapFragmentActivity
 
                 LatLng centroBolivia = new LatLng(-17.141273, -64.397211);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centroBolivia, 5));
-
-                final Marker marker2 = mMap.addMarker(new MarkerOptions().position(new LatLng(-20.89275048, -63.37744245)));
-
-                final int offsetX = (int) getResources().getDimension(R.dimen.marker_offset_x);
-                final int offsetY = (int) getResources().getDimension(R.dimen.marker_offset_y);
-
-                final InfoWindow.MarkerSpecification markerSpec =
-                        new InfoWindow.MarkerSpecification(offsetX, offsetY);
-
-                formWindow = new InfoWindow(marker2, markerSpec, new FormFragment());
-
-                mMap.setOnMarkerClickListener(MapFragmentActivity.this);
-
             }
 
         });
-        infoWindowManager.setWindowShowListener(MapFragmentActivity.this);
-
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(TRAMO_LOADER_ID, null, this);
 
@@ -130,19 +115,17 @@ public class MapFragmentActivity
                     // Flip the values of the red, green and blue components of the polyline's color.
                     polyline.setColor(polyline.getColor() ^ 0x00ffffff);
                     //acá implementar el método para mostrar la vista personalizada
-                    //crea un marcador y añadelo al mapa
                     //de la pollilinea obtener sus corrdenadas y poner el marcador en la primera coordenada
                     LatLng posicion = polyline.getPoints().get(0);
-                    Marker markerDePolilinea = mMap.addMarker(new MarkerOptions().position(posicion));
+                    Marker markerDePolilinea = mMap.addMarker(new MarkerOptions().position(posicion).alpha(0));
 
+                    //creando el infowindow
+                    //primero las especificaciones del marker
                     InfoWindow.MarkerSpecification markerSpec =
                             new InfoWindow.MarkerSpecification(1,1);
-
+                    //ahora el infowindow de tipo form fragment
                     formWindow = new InfoWindow(markerDePolilinea, markerSpec, new FormFragment());
-
-                    //mMap.setOnMarkerClickListener(MapFragmentActivity.this);
-
-
+                    infoWindowManager.toggle(formWindow, true);
                 }
             });
 
