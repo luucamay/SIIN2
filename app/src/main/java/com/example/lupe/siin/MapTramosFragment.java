@@ -74,7 +74,6 @@ public class MapTramosFragment extends Fragment
             for (Tramo t : tramos){
                 //aqui mapear cada tramoa
             }
-
         }
     }
 
