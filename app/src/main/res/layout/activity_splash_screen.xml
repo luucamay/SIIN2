@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.lupe.siin.SplashScreenActivity"
-    android:background="#1b1b1b"
+    android:background="@drawable/svg_map"
+    android:orientation="vertical"
+    android:paddingTop="48dp">
 
-    >
+    <TextView
+        android:id="@+id/tituloSplashScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/abc"
+        android:textAlignment="center"
+        android:textSize="@dimen/textTitle"
+        tools:text="Administradora Boliviana de Carreteras" />
 
     <ImageView
         android:id="@+id/logoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher_foreground"
+        android:layout_gravity="center_horizontal"
+        android:minWidth="256dp"
+        android:minHeight="256dp"
+        android:scaleType="fitCenter"/>
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/ic_launcher" />
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:text="¡Carreteras que integran Bolivian@s para vivir bien!"
+        android:textAlignment="center"
+        android:textStyle="italic" />
+</LinearLayout>
