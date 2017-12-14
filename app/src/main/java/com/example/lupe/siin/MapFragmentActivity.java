@@ -118,7 +118,6 @@ public class MapFragmentActivity
                     //de la pollilinea obtener sus corrdenadas y poner el marcador en la primera coordenada
                     LatLng posicion = polyline.getPoints().get(0);
                     Marker markerDePolilinea = mMap.addMarker(new MarkerOptions().position(posicion).alpha(0));
-
                     //creando el infowindow
                     //primero las especificaciones del marker
                     InfoWindow.MarkerSpecification markerSpec =
