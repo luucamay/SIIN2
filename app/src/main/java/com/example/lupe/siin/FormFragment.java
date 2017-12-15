@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 public class FormFragment extends Fragment {
 
-    private TextView midTramo;
     private TextView mobjectid1;
     private TextView mobjectid;
     private TextView mobjectid2;
@@ -39,60 +38,65 @@ public class FormFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //haciendo un intent para abrir otra activity
-                Intent intent = new Intent(getContext(),FichaActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(),SeguimientoActivity.class);
-                startActivity(intent);
-            }
-        });
-        midTramo = (TextView) view.findViewById(R.id.idTramo);
+        TextView midTramo = (TextView) view.findViewById(R.id.idTramo);
         // Get back arguments
         String sIdTramo = getArguments().getString("tIdTramo", "");
-        midTramo.setText(midTramo.getText().toString()+" "+sIdTramo);
+        midTramo.setText(midTramo.getText().toString() + " " + sIdTramo);
 
         mobjectid = (TextView) view.findViewById(R.id.objectid);
         int sobjectid = getArguments().getInt("tOBJECTID", 0);
-        mobjectid.setText(mobjectid.getText().toString()+" "+sobjectid);
+        mobjectid.setText(mobjectid.getText().toString() + " " + sobjectid);
 
         mobjectid1 = (TextView) view.findViewById(R.id.objectid_1);
         int sobjectid1 = getArguments().getInt("tOBJECTID_1", 0);
-        mobjectid1.setText(mobjectid1.getText().toString()+" "+sobjectid1);
+        mobjectid1.setText(mobjectid1.getText().toString() + " " + sobjectid1);
 
         mobjectid2 = (TextView) view.findViewById(R.id.objectid_2);
         int sobjectid2 = getArguments().getInt("tOBJECTID_2", 0);
-        mobjectid2.setText(mobjectid2.getText().toString()+" "+sobjectid2);
+        mobjectid2.setText(mobjectid2.getText().toString() + " " + sobjectid2);
 
         mdistancia = (TextView) view.findViewById(R.id.distancia);
         float sdistancia = getArguments().getFloat("tDistancia", 0);
-        mdistancia.setText(mdistancia.getText().toString()+" "+sdistancia);
+        mdistancia.setText(mdistancia.getText().toString() + " " + sdistancia);
 
         mpoblacion = (TextView) view.findViewById(R.id.poblacion);
-        String spoblacion = getArguments().getString("tPoblacion","");
-        mpoblacion.setText(mpoblacion.getText().toString()+" "+spoblacion);
+        String spoblacion = getArguments().getString("tPoblacion", "");
+        mpoblacion.setText(mpoblacion.getText().toString() + " " + spoblacion);
 
         mtramo = (TextView) view.findViewById(R.id.tramo);
-        String stramo = getArguments().getString("tTramo","");
-        mtramo.setText(mtramo.getText().toString()+" "+stramo);
+        String stramo = getArguments().getString("tTramo", "");
+        mtramo.setText(mtramo.getText().toString() + " " + stramo);
 
         mshapeleng = (TextView) view.findViewById(R.id.shapeLeng);
-        float sshapeleng = getArguments().getFloat("tShape_Leng",0);
-        mshapeleng.setText(mshapeleng.getText().toString()+" "+sshapeleng);
+        float sshapeleng = getArguments().getFloat("tShape_Leng", 0);
+        mshapeleng.setText(mshapeleng.getText().toString() + " " + sshapeleng);
 
         mproyid = (TextView) view.findViewById(R.id.proyId);
-        int sproyid = getArguments().getInt("tProyId",0);
-        mproyid.setText(mproyid.getText().toString()+" "+sproyid);
+        final int sproyid = getArguments().getInt("tProyId", 0);
+        mproyid.setText(mproyid.getText().toString() + " " + sproyid);
 
         midsubproyecto = (TextView) view.findViewById(R.id.idSubproyecto);
-        int sidsubproyecto = getArguments().getInt("tIdSubproyecto", 0);
-        midsubproyecto.setText(midsubproyecto.getText().toString()+" "+sidsubproyecto);
+        final int sidsubproyecto = getArguments().getInt("tIdSubproyecto", 0);
+        midsubproyecto.setText(midsubproyecto.getText().toString() + " " + sidsubproyecto);
+
+        view.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //haciendo un intent para abrir otra activity
+                Intent myIntent = new Intent(getContext(), FichaActivity.class);
+                myIntent.putExtra("tProyId",sproyid);
+                myIntent.putExtra("tIdSubproyecto",sidsubproyecto);
+                startActivity(myIntent);
+            }
+        });
+
+        view.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SeguimientoActivity.class);
+                intent.putExtra("tProyId",sproyid);
+                intent.putExtra("tIdSubproyecto",sidsubproyecto);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -118,6 +122,7 @@ public class FormFragment extends Fragment {
         args.putFloat("tShape_Leng", tShape_Leng);
         args.putInt("tProyId", tProyId);
         args.putInt("tIdSubproyecto", tIdSubproyecto);
+
         //args.putInt("someInt", someInt);
         fragmentForm.setArguments(args);
         return fragmentForm;
