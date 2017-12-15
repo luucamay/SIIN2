@@ -9,18 +9,18 @@ import java.util.ArrayList;
  */
 
 public class Tramo {
-    public final String id;
-    public final ArrayList<LatLng> coordenadas;
-    public final int OBJECTID_1;
-    public final int OBJECTID;
-    public final float Distancia;
-    public final int OBJECTID_2;
-    public final String Poblacion;
-    public final String Tramo;
-    public final float Shape_Leng;
-    public final String color;
-    public final int proyId;
-    public final int idSubproyecto;
+    private final String id;
+    private final ArrayList<LatLng> coordenadas;
+    private final int OBJECTID_1;
+    private final int OBJECTID;
+    private final float Distancia;
+    private final int OBJECTID_2;
+    private final String Poblacion;
+    private final String Tramo;
+    private final float Shape_Leng;
+    private final String color;
+    private final int proyId;
+    private final int idSubproyecto;
 
 
     /**
@@ -40,5 +40,69 @@ public class Tramo {
         this.color = color;
         this.proyId = proyId;
         this.idSubproyecto = idSubproyecto;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ArrayList<LatLng> getCoordenadas() {
+        return coordenadas;
+    }
+
+    public String getTramo() {
+        return Tramo;
+    }
+
+    public int getOBJECTID_1() {
+        return OBJECTID_1;
+    }
+
+    public int getOBJECTID() {
+        return OBJECTID;
+    }
+
+    public float getDistancia() {
+        return Distancia;
+    }
+
+    public int getOBJECTID_2() {
+        return OBJECTID_2;
+    }
+
+    public String getPoblacion() {
+        return Poblacion;
+    }
+
+    public float getShape_Leng() {
+        return Shape_Leng;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getProyId() {
+        return proyId;
+    }
+
+    public int getIdSubproyecto() {
+        return idSubproyecto;
+    }
+
+    public String convierteACadena() {
+        String cadena = "";
+        cadena = "id: " + this.getId()
+                + " tramo: " + this.getTramo()
+                + " objectid1: " + this.getOBJECTID()
+                + " objectid: " + this.getOBJECTID()
+                + " objectid2: " + this.getOBJECTID_2()
+                + " distancia: " + this.getDistancia()
+                + " poblacion: " + this.getPoblacion()
+                + " shapeleng: " + this.getShape_Leng()
+                + " color: " + this.getColor()
+                + " poryId: " + this.getProyId()
+                + " idSubproyecto: " + this.getIdSubproyecto();
+        return cadena;
     }
 }

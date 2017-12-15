@@ -1,11 +1,11 @@
 package com.example.lupe.siin;
 
+import android.app.LoaderManager;
+import android.content.Loader;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.appolica.interactiveinfowindow.InfoWindow;
@@ -17,34 +17,25 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
+import java.util.List;
 
 public class MapFragmentActivity
         extends FragmentActivity
-        implements InfoWindowManager.WindowShowListener,
+        implements LoaderManager.LoaderCallbacks<List<Tramo>>,
+        InfoWindowManager.WindowShowListener,
         GoogleMap.OnMarkerClickListener {
 
     public static final String LOG_TAG = MapFragmentActivity.class.getSimpleName();
     private static final String TRAMO_REQUEST_URL =
             "http://abc.phuyu.me/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Atja01&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature";
-
+    private static final int TRAMO_LOADER_ID = 1;
     private GoogleMap mMap;
     private InfoWindow formWindow;
     private InfoWindowManager infoWindowManager;
+    private Polyline mPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,34 +53,15 @@ public class MapFragmentActivity
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
                 mMap.getUiSettings().setZoomGesturesEnabled(true);
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
                 LatLng centroBolivia = new LatLng(-17.141273, -64.397211);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centroBolivia,5));
-                // Kick off an {@link AsyncTask} to perform the network request
-                MapFragmentActivity.TramosAsyncTask task = new MapFragmentActivity.TramosAsyncTask();
-                task.execute();
-
-                final Marker marker2 = mMap.addMarker(new MarkerOptions().position(new LatLng(-20.89275048,-63.37744245)));
-
-                final int offsetX = (int) getResources().getDimension(R.dimen.marker_offset_x);
-                final int offsetY = (int) getResources().getDimension(R.dimen.marker_offset_y);
-
-                final InfoWindow.MarkerSpecification markerSpec =
-                        new InfoWindow.MarkerSpecification(offsetX, offsetY);
-
-                formWindow = new InfoWindow(marker2, markerSpec, new FormFragment());
-
-                mMap.setOnMarkerClickListener(MapFragmentActivity.this);
-
-                //añadiendo las rutas
-
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centroBolivia, 5));
             }
 
-            //aca creando el TramosAsyncTask
-
         });
-
-        infoWindowManager.setWindowShowListener(MapFragmentActivity.this);
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(TRAMO_LOADER_ID, null, this);
 
     }
 
@@ -106,223 +78,105 @@ public class MapFragmentActivity
 
     @Override
     public void onWindowShowStarted(@NonNull InfoWindow infoWindow) {
-    //    Log.d("debug", "onWindowShowStarted: " + infoWindow);
+        //    Log.d("debug", "onWindowShowStarted: " + infoWindow);
     }
 
     @Override
     public void onWindowShown(@NonNull InfoWindow infoWindow) {
-    //    Log.d("debug", "onWindowShown: " + infoWindow);
+        //    Log.d("debug", "onWindowShown: " + infoWindow);
     }
 
     @Override
     public void onWindowHideStarted(@NonNull InfoWindow infoWindow) {
-    //    Log.d("debug", "onWindowHideStarted: " + infoWindow);
+        //    Log.d("debug", "onWindowHideStarted: " + infoWindow);
     }
 
     @Override
     public void onWindowHidden(@NonNull InfoWindow infoWindow) {
-    //    Log.d("debug", "onWindowHidden: " + infoWindow);
+        //    Log.d("debug", "onWindowHidden: " + infoWindow);
     }
-    private void updateUi(Tramo tramo) {
-        //aca se asigna los datos del objeto java al info view
-        /*TextView midTramo = (TextView) findViewById(R.id.idTramo);
-        TextView mobjectId1 = (TextView) findViewById(R.id.objectid_1);
-        TextView mobjectId = (TextView) findViewById(R.id.objectid);
-        TextView mdistancia = (TextView) findViewById(R.id.distancia);
-        TextView mobjectId2 = (TextView) findViewById(R.id.objectid_2);
-        TextView mpoblacion = (TextView) findViewById(R.id.poblacion);
-        TextView mtramo = (TextView) findViewById(R.id.tramo);
-        TextView mshapeLeng = (TextView) findViewById(R.id.shapeLeng);
-        TextView mproyId = (TextView) findViewById(R.id.proyId);
-        TextView midSubproyecto = (TextView) findViewById(R.id.idSubproyecto);
-        midTramo.setText(tramo.id);
-        mobjectId.setText(tramo.OBJECTID);
-        mobjectId1.setText(tramo.OBJECTID_1);
-        mobjectId2.setText(tramo.OBJECTID_2);
-        mdistancia.setText(""+tramo.Distancia);
-        mpoblacion.setText(tramo.Poblacion);
-        mtramo.setText(tramo.Tramo);
-        mshapeLeng.setText(""+tramo.Shape_Leng);
-        mproyId.setText(tramo.proyId);
-        midSubproyecto.setText(tramo.idSubproyecto);
-*/
-        Log.d("debug", "updateUI: " + tramo.id+" "+tramo.Distancia+" "+tramo.Poblacion+" "+tramo.proyId+" "+tramo.idSubproyecto);
 
+    private void updateUi(List<Tramo> tramos) {
 
         try {
-            if (mMap == null) {
-
-            }
             //construir una linea
-            PolylineOptions polylineOptions = new PolylineOptions();
-            polylineOptions.addAll(tramo.coordenadas)
-                    .width(25)
-                    .color(Color.parseColor("#"+tramo.color))
-                    .clickable(true);
-            mMap.addPolyline(polylineOptions);
+            for (int i = 0; i < tramos.size(); i++) {
+                Tramo tramo = tramos.get(i);
+                PolylineOptions polylineOptions = new PolylineOptions();
+                polylineOptions.addAll(tramo.coordenadas)
+                        .width(20)
+                        .color(Color.parseColor("#" + tramo.color))
+                        .clickable(true);
+                //aca añade la polilinea al mapa
+                mPolyline = mMap.addPolyline(polylineOptions);
+                //aca enlaza el objeto tramo con la polilinea
+                mPolyline.setTag(tramo);
+            }
+            // Add a listener for polyline clicks that changes the clicked polyline's color.
+            mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+                @Override
+                public void onPolylineClick(Polyline polyline) {
+                    // Flip the values of the red, green and blue components of the polyline's color.
+                    polyline.setColor(polyline.getColor() ^ 0x00ffffff);
+
+                    //acá implementar el método para mostrar la vista personalizada
+
+                    // obtener el objeto Tramo de esta polilinea
+                    Tramo mTramo = (Tramo) polyline.getTag();
+                    Log.d("Tramo detalles:",mTramo.convierteACadena());
+                    //de la pollilinea obtener sus corrdenadas y poner el marcador en la primera coordenada
+                    LatLng posicion = polyline.getPoints().get(0);
+                    Marker markerDePolilinea = mMap.addMarker(new MarkerOptions().position(posicion).alpha(0));
+                    //creando el infowindow
+                    //primero las especificaciones del marker
+                    InfoWindow.MarkerSpecification markerSpec =
+                            new InfoWindow.MarkerSpecification(1,1);
+                    //ahora el infowindow de tipo form fragment
+                    FormFragment formFragment = FormFragment.newInstance(mTramo.getId(),
+                            mTramo.getOBJECTID_1(),
+                            mTramo.getOBJECTID(),
+                            mTramo.getDistancia(),
+                            mTramo.getOBJECTID_2(),
+                            mTramo.getPoblacion(),
+                            mTramo.getTramo(),
+                            mTramo.getShape_Leng(),
+                            mTramo.getProyId(),
+                            mTramo.getIdSubproyecto()
+                            );
+                    formWindow = new InfoWindow(markerDePolilinea, markerSpec, formFragment);
+
+                    infoWindowManager.toggle(formWindow, true);
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    private class TramosAsyncTask extends AsyncTask<URL, Void, Tramo> {
 
-        @Override
-        protected Tramo doInBackground(URL... urls) {
-            // Create URL object
-            URL url = createUrl(TRAMO_REQUEST_URL);
+    @Override
+    public Loader<List<Tramo>> onCreateLoader(int i, Bundle bundle) {
+        return new TramoLoader(this, TRAMO_REQUEST_URL);
 
-            // Perform HTTP request to the URL and receive a JSON response back
-            String jsonResponse = "";
-            try {
-                jsonResponse = makeHttpRequest(url);
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Problema al realizar la solicitud HTTP.", e);
-            }
-
-            // Extract relevant fields from the JSON response and create an {@link Event} object
-            Tramo tramo = extractFeatureFromJson(jsonResponse);
-
-            return tramo;
-        }
-
-        /**
-         * Update the screen with the given tramo (which was the result of the
-         * {@link MainActivity.SiinAsyncTask}).
-         */
-        @Override
-        protected void onPostExecute(Tramo tramo) {
-            if (tramo == null) {
-                return;
-            }
-            updateUi(tramo);
-
-        }
-
-        /**
-         * Returns new URL object from the given string URL.
-         */
-        private URL createUrl(String stringUrl) {
-            URL url = null;
-            try {
-                url = new URL(stringUrl);
-            } catch (MalformedURLException exception) {
-                Log.e(LOG_TAG, "Error al crear URL", exception);
-                return null;
-            }
-            return url;
-        }
-
-        /**
-         * Make an HTTP request to the given URL and return a String as the response.
-         */
-        private String makeHttpRequest(URL url) throws IOException {
-            String jsonResponse = "";
-
-            // If the URL is null, then return early.
-            if (url == null) {
-                return jsonResponse;
-            }
-
-            HttpURLConnection urlConnection = null;
-            InputStream inputStream = null;
-            try {
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setReadTimeout(10000 /* milliseconds */);
-                urlConnection.setConnectTimeout(15000 /* milliseconds */);
-                urlConnection.connect();
-
-                // If the request was successful (response code 200),
-                // then read the input stream and parse the response.
-                if (urlConnection.getResponseCode() == 200) {
-                    inputStream = urlConnection.getInputStream();
-                    jsonResponse = readFromStream(inputStream);
-                } else {
-                    Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
-                }
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Problema al obtener los JSON de Ejecucion del presupuesto.", e);
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (inputStream != null) {
-                    // function must handle java.io.IOException here
-                    inputStream.close();
-                }
-            }
-            return jsonResponse;
-        }
-
-        /**
-         * Convert the {@link InputStream} into a String which contains the
-         * whole JSON response from the server.
-         */
-        private String readFromStream(InputStream inputStream) throws IOException {
-            StringBuilder output = new StringBuilder();
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
-                BufferedReader reader = new BufferedReader(inputStreamReader);
-                String line = reader.readLine();
-                while (line != null) {
-                    output.append(line);
-                    line = reader.readLine();
-                }
-            }
-            return output.toString();
-        }
-
-        /**
-         * Return an {@link Tramo} object by parsing out information
-         * about the first tramo from the input tramoJSON string.
-         */
-        private Tramo extractFeatureFromJson(String tramoJSON) {
-            // If the JSON string is empty or null, then return early.
-            if (TextUtils.isEmpty(tramoJSON)) {
-                return null;
-            }
-
-            try {
-                JSONObject baseJsonResponse = new JSONObject(tramoJSON);
-                JSONArray features = baseJsonResponse.getJSONArray("features");
-                JSONObject shape = features.getJSONObject(1);
-                String id = shape.getString("id");
-                JSONObject geometry = shape.getJSONObject("geometry");
-                JSONObject propiedades = shape.getJSONObject("properties");
-
-                JSONArray coordenadasjson = geometry.getJSONArray("coordinates");
-                JSONArray coordenadascero = coordenadasjson.getJSONArray(0);
-                ArrayList<LatLng> latLngArrayList = new ArrayList<>();
-                for (int i = 0; i < coordenadascero.length(); i++) {
-                    JSONArray latitudlongitud = coordenadascero.getJSONArray(i);
-                    //objeto de latitud y longitud
-                    LatLng latLng = new LatLng(latitudlongitud.getDouble(1), latitudlongitud.getDouble(0));
-                    //ponerlo en un array de latlng
-                    latLngArrayList.add(latLng);
-                }
-
-                int objectid_1 = propiedades.getInt("OBJECTID_1");
-                int objectid = propiedades.getInt("OBJECTID");
-                float distancia = (float) propiedades.getDouble("Distancia");
-                ;
-                int objectid_2 = propiedades.getInt("OBJECTID_2");
-                String poblacion = propiedades.getString("Pob");
-                String tramo = propiedades.getString("Tramo");
-                float shape_leng = (float) propiedades.getDouble("Shape_Leng");
-                String color = propiedades.getString("color");
-                int proyId = propiedades.getInt("proyId");
-                int idSubproyecto = propiedades.getInt("idSubproyecto");
-
-                // Create a new {@link Event} object
-                return new Tramo(id, latLngArrayList, objectid_1, objectid, distancia, objectid_2, poblacion, tramo, shape_leng,
-                        color, proyId, idSubproyecto);
-
-            } catch (JSONException e) {
-                Log.e(LOG_TAG, "Problema parseando los resultados JSON", e);
-            }
-            return null;
-        }
     }
+
+    @Override
+    public void onLoadFinished(Loader<List<Tramo>> loader, List<Tramo> tramos) {
+
+        // If there is a valid list of {@link Tramo}s, then add them to the adapter's
+        // data set. This will trigger the ListView to update.
+        if (tramos != null && !tramos.isEmpty()) {
+            for (Tramo t : tramos) {
+                Log.d("My array list content: ", t.getId());
+            }
+            updateUi(tramos);
+        } else return;
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Tramo>> loader) {
+    }
+
+
 }

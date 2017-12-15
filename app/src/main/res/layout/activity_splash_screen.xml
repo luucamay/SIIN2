@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="48dp"
+    tools:context="com.example.lupe.siin.SplashScreenActivity">
+
+    <TextView
+        android:id="@+id/tituloSplashScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/abc"
+        android:textAlignment="center"
+        android:textSize="@dimen/textTitle"
+        tools:text="Administradora Boliviana de Carreteras" />
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/abc"
+        android:minHeight="256dp"
+        android:minWidth="256dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher_foreground" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lemaAbc"
+        android:textAlignment="center"
+        android:textStyle="italic" />
+</LinearLayout>
