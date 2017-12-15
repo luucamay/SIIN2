@@ -33,7 +33,7 @@
 
     <!-- strings para el custom info view-->
 
-    <string name="infoWindowTextView">Proyecto: TJ01</string>
+    <string name="infoWindowTextView">Proyecto:</string>
     <string name="ficha">Ficha</string>
     <string name="seguimiento">Seguimiento</string>
 

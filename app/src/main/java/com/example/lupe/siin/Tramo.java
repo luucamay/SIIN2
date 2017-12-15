@@ -42,14 +42,67 @@ public class Tramo {
         this.idSubproyecto = idSubproyecto;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public ArrayList<LatLng> getCoordenadas() {
+        return coordenadas;
+    }
+
     public String getTramo() {
         return Tramo;
     }
 
-    public String getId() {
-        return id;
+    public int getOBJECTID_1() {
+        return OBJECTID_1;
     }
-    public ArrayList<LatLng> getCoordenadas() {
-        return coordenadas;
+
+    public int getOBJECTID() {
+        return OBJECTID;
+    }
+
+    public float getDistancia() {
+        return Distancia;
+    }
+
+    public int getOBJECTID_2() {
+        return OBJECTID_2;
+    }
+
+    public String getPoblacion() {
+        return Poblacion;
+    }
+
+    public float getShape_Leng() {
+        return Shape_Leng;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getProyId() {
+        return proyId;
+    }
+
+    public int getIdSubproyecto() {
+        return idSubproyecto;
+    }
+
+    public String convierteACadena() {
+        String cadena = "";
+        cadena = "id: " + this.getId()
+                + " tramo: " + this.getTramo()
+                + " objectid1: " + this.getOBJECTID()
+                + " objectid: " + this.getOBJECTID()
+                + " objectid2: " + this.getOBJECTID_2()
+                + " distancia: " + this.getDistancia()
+                + " poblacion: " + this.getPoblacion()
+                + " shapeleng: " + this.getShape_Leng()
+                + " color: " + this.getColor()
+                + " poryId: " + this.getProyId()
+                + " idSubproyecto: " + this.getIdSubproyecto();
+        return cadena;
     }
 }

@@ -35,6 +35,7 @@ public class MapFragmentActivity
     private GoogleMap mMap;
     private InfoWindow formWindow;
     private InfoWindowManager infoWindowManager;
+    private Polyline mPolyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +107,10 @@ public class MapFragmentActivity
                         .width(20)
                         .color(Color.parseColor("#" + tramo.color))
                         .clickable(true);
-                mMap.addPolyline(polylineOptions);
+                //aca añade la polilinea al mapa
+                mPolyline = mMap.addPolyline(polylineOptions);
+                //aca enlaza el objeto tramo con la polilinea
+                mPolyline.setTag(tramo);
             }
             // Add a listener for polyline clicks that changes the clicked polyline's color.
             mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
@@ -114,7 +118,12 @@ public class MapFragmentActivity
                 public void onPolylineClick(Polyline polyline) {
                     // Flip the values of the red, green and blue components of the polyline's color.
                     polyline.setColor(polyline.getColor() ^ 0x00ffffff);
+
                     //acá implementar el método para mostrar la vista personalizada
+
+                    // obtener el objeto Tramo de esta polilinea
+                    Tramo mTramo = (Tramo) polyline.getTag();
+                    Log.d("Tramo detalles:",mTramo.convierteACadena());
                     //de la pollilinea obtener sus corrdenadas y poner el marcador en la primera coordenada
                     LatLng posicion = polyline.getPoints().get(0);
                     Marker markerDePolilinea = mMap.addMarker(new MarkerOptions().position(posicion).alpha(0));
@@ -123,7 +132,19 @@ public class MapFragmentActivity
                     InfoWindow.MarkerSpecification markerSpec =
                             new InfoWindow.MarkerSpecification(1,1);
                     //ahora el infowindow de tipo form fragment
-                    formWindow = new InfoWindow(markerDePolilinea, markerSpec, new FormFragment());
+                    FormFragment formFragment = FormFragment.newInstance(mTramo.getId(),
+                            mTramo.getOBJECTID_1(),
+                            mTramo.getOBJECTID(),
+                            mTramo.getDistancia(),
+                            mTramo.getOBJECTID_2(),
+                            mTramo.getPoblacion(),
+                            mTramo.getTramo(),
+                            mTramo.getShape_Leng(),
+                            mTramo.getProyId(),
+                            mTramo.getIdSubproyecto()
+                            );
+                    formWindow = new InfoWindow(markerDePolilinea, markerSpec, formFragment);
+
                     infoWindowManager.toggle(formWindow, true);
                 }
             });
