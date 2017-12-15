@@ -32,14 +32,15 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        //Este es el que controla el contenido de la pantalla
+        // Este es el que controla el contenido de la pantalla
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Se abre el fragment de ejecucion general al crear la activity
         EjecucionFragment ejecucionFragment = new EjecucionFragment();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.constraintmainlayout,ejecucionFragment);
+        transaction.replace(R.id.contentMain,ejecucionFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -86,20 +87,14 @@ public class MainActivity extends AppCompatActivity
             EjecucionFragment ejecucionFragment = new EjecucionFragment();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.constraintmainlayout,ejecucionFragment);
+            transaction.replace(R.id.contentMain,ejecucionFragment);
             transaction.addToBackStack(null);
             transaction.commit();
 
         } else if (id == R.id.ejecucion_regional) {
-            Intent intent = new Intent(this, TramoActivity.class);
-            startActivity(intent);
+
         } else if (id == R.id.ejecucion_proyecto) {
-            MapaGeneralFragment mapaGeneralFragment = new MapaGeneralFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.constraintmainlayout,mapaGeneralFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+
         } else if (id == R.id.maps){
             Intent intent = new Intent(this, MapFragmentActivity.class);
             startActivity(intent);

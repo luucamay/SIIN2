@@ -9,18 +9,18 @@ import java.util.ArrayList;
  */
 
 public class Tramo {
-    public final String id;
-    public final ArrayList<LatLng> coordenadas;
-    public final int OBJECTID_1;
-    public final int OBJECTID;
-    public final float Distancia;
-    public final int OBJECTID_2;
-    public final String Poblacion;
-    public final String Tramo;
-    public final float Shape_Leng;
-    public final String color;
-    public final int proyId;
-    public final int idSubproyecto;
+    private final String id;
+    private final ArrayList<LatLng> coordenadas;
+    private final int OBJECTID_1;
+    private final int OBJECTID;
+    private final float Distancia;
+    private final int OBJECTID_2;
+    private final String Poblacion;
+    private final String Tramo;
+    private final float Shape_Leng;
+    private final String color;
+    private final int proyId;
+    private final int idSubproyecto;
 
 
     /**

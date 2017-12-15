@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class FormFragment extends Fragment {
 
+    private TextView midTramo;
     private TextView mobjectid1;
     private TextView mobjectid;
     private TextView mobjectid2;
@@ -38,7 +39,7 @@ public class FormFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView midTramo = (TextView) view.findViewById(R.id.idTramo);
+        midTramo = (TextView) view.findViewById(R.id.idTramo);
         // Get back arguments
         String sIdTramo = getArguments().getString("tIdTramo", "");
         midTramo.setText(midTramo.getText().toString() + " " + sIdTramo);
