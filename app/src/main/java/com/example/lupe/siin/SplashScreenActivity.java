@@ -29,6 +29,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.fade_in);
         logoImageView.startAnimation(animFadein);
+        logoImageView = (ImageView) findViewById(R.id.background);
+        logoImageView.startAnimation(animFadein);
 
         animFadein.setAnimationListener(new Animation.AnimationListener() {
             @Override
