@@ -103,9 +103,9 @@ public class MapFragmentActivity
             for (int i = 0; i < tramos.size(); i++) {
                 Tramo tramo = tramos.get(i);
                 PolylineOptions polylineOptions = new PolylineOptions();
-                polylineOptions.addAll(tramo.coordenadas)
+                polylineOptions.addAll(tramo.getCoordenadas())
                         .width(20)
-                        .color(Color.parseColor("#" + tramo.color))
+                        .color(Color.parseColor("#" + tramo.getColor()))
                         .clickable(true);
                 //aca añade la polilinea al mapa
                 mPolyline = mMap.addPolyline(polylineOptions);
