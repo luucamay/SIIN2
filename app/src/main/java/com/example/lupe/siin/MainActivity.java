@@ -16,7 +16,9 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         EjecucionFragment ejecucionFragment = new EjecucionFragment();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.contentMain,ejecucionFragment);
+        transaction.replace(R.id.contentMain, ejecucionFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -87,15 +89,21 @@ public class MainActivity extends AppCompatActivity
             EjecucionFragment ejecucionFragment = new EjecucionFragment();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.contentMain,ejecucionFragment);
+            transaction.replace(R.id.contentMain, ejecucionFragment);
             transaction.addToBackStack(null);
             transaction.commit();
 
         } else if (id == R.id.ejecucion_regional) {
+            MapGeneralFragment mapGeneralFragment = new MapGeneralFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.contentMain, mapGeneralFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
 
         } else if (id == R.id.ejecucion_proyecto) {
 
-        } else if (id == R.id.maps){
+        } else if (id == R.id.maps) {
             Intent intent = new Intent(this, MapFragmentActivity.class);
             startActivity(intent);
         }

@@ -1,0 +1,13 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lupe.siin.MapGeneralFragment">
+
+    <fragment
+        android:id="@+id/infoWindowMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.appolica.interactiveinfowindow.fragment.MapInfoWindowFragment"/>
+
+</FrameLayout>
