@@ -36,10 +36,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MapFragmentActivity" />
         <activity android:name=".FichaActivity" />
         <activity android:name=".SeguimientoActivity" />
-        <activity android:name=".TramoActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">
