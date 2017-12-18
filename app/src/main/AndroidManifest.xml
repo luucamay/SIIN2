@@ -36,8 +36,22 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".FichaActivity" />
-        <activity android:name=".SeguimientoActivity" />
+        <activity
+            android:name=".FichaActivity"
+            android:parentActivityName=".MainActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+        <activity
+            android:name=".SeguimientoActivity"
+            android:parentActivityName=".MainActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">
