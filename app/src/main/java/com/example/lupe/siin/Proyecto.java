@@ -7,12 +7,12 @@ package com.example.lupe.siin;
 public class Proyecto {
 
     private final int proyId;
-    private final String proySISIN;
+    private final String proySisin;
     private final String proyDescrip;
 
-    public Proyecto(int proyId, String proySISIN, String proyDescrip) {
+    public Proyecto(int proyId, String proySisin, String proyDescrip) {
         this.proyId = proyId;
-        this.proySISIN = proySISIN;
+        this.proySisin = proySisin;
         this.proyDescrip = proyDescrip;
     }
 
@@ -20,8 +20,8 @@ public class Proyecto {
         return proyId;
     }
 
-    public String getProySISIN() {
-        return proySISIN;
+    public String getProySisin() {
+        return proySisin;
     }
 
     public String getProyDescrip() {
