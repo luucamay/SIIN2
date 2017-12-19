@@ -1,6 +1,5 @@
 package com.example.lupe.siin;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -16,8 +15,13 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String TRAMO_REQUEST_URL =
+            "http://abc.phuyu.me/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Atja01&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature";
+    private static final int TRAMO_LOADER_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         EjecucionFragment ejecucionFragment = new EjecucionFragment();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.contentMain,ejecucionFragment);
+        transaction.replace(R.id.contentMain, ejecucionFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             EjecucionFragment ejecucionFragment = new EjecucionFragment();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.contentMain,ejecucionFragment);
+            transaction.replace(R.id.contentMain, ejecucionFragment);
             transaction.addToBackStack(null);
             transaction.commit();
 
@@ -95,14 +99,17 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.ejecucion_proyecto) {
 
-        } else if (id == R.id.maps){
-            Intent intent = new Intent(this, MapFragmentActivity.class);
-            startActivity(intent);
+        } else if (id == R.id.maps) {
+            MapGeneralFragment mapGeneralFragment = new MapGeneralFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.contentMain, mapGeneralFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

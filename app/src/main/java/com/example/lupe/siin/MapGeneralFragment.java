@@ -1,12 +1,16 @@
 package com.example.lupe.siin;
 
-import android.app.LoaderManager;
-import android.content.Loader;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.appolica.interactiveinfowindow.InfoWindow;
 import com.appolica.interactiveinfowindow.InfoWindowManager;
@@ -22,13 +26,16 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
-public class MapFragmentActivity
-        extends FragmentActivity
-        implements LoaderManager.LoaderCallbacks<List<Tramo>>,
-        InfoWindowManager.WindowShowListener,
-        GoogleMap.OnMarkerClickListener {
 
-    public static final String LOG_TAG = MapFragmentActivity.class.getSimpleName();
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class MapGeneralFragment extends Fragment implements
+        InfoWindowManager.WindowShowListener,
+        GoogleMap.OnMarkerClickListener,
+        LoaderManager.LoaderCallbacks<List<Tramo>> {
+
+    public static final String LOG_TAG = MapGeneralFragment.class.getSimpleName();
     private static final String TRAMO_REQUEST_URL =
             "http://abc.phuyu.me/geoserver/wfs?srsName=EPSG%3A4326&typename=geonode%3Atja01&outputFormat=json&version=1.0.0&service=WFS&request=GetFeature";
     private static final int TRAMO_LOADER_ID = 1;
@@ -37,17 +44,24 @@ public class MapFragmentActivity
     private InfoWindowManager infoWindowManager;
     private Polyline mPolyline;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_fragment);
 
+    public MapGeneralFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_map_general, container, false);
+
+        //asegurate que obtengas al child fragment manager
         final MapInfoWindowFragment mapInfoWindowFragment =
-                (MapInfoWindowFragment) getSupportFragmentManager().findFragmentById(R.id.infoWindowMap);
+                (MapInfoWindowFragment) getChildFragmentManager().findFragmentById(R.id.infoWindowMap);
 
         infoWindowManager = mapInfoWindowFragment.infoWindowManager();
         infoWindowManager.setHideOnFling(true);
-
         mapInfoWindowFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
@@ -60,9 +74,10 @@ public class MapFragmentActivity
             }
 
         });
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.initLoader(TRAMO_LOADER_ID, null, this);
 
+        android.support.v4.app.LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(TRAMO_LOADER_ID, null, this);
+        return rootView;
     }
 
     @Override
@@ -78,22 +93,40 @@ public class MapFragmentActivity
 
     @Override
     public void onWindowShowStarted(@NonNull InfoWindow infoWindow) {
-        //    Log.d("debug", "onWindowShowStarted: " + infoWindow);
+
     }
 
     @Override
     public void onWindowShown(@NonNull InfoWindow infoWindow) {
-        //    Log.d("debug", "onWindowShown: " + infoWindow);
+
     }
 
     @Override
     public void onWindowHideStarted(@NonNull InfoWindow infoWindow) {
-        //    Log.d("debug", "onWindowHideStarted: " + infoWindow);
+
     }
 
     @Override
     public void onWindowHidden(@NonNull InfoWindow infoWindow) {
-        //    Log.d("debug", "onWindowHidden: " + infoWindow);
+
+    }
+
+    @Override
+    public Loader<List<Tramo>> onCreateLoader(int i, Bundle bundle) {
+        return new TramoLoader(getContext(), TRAMO_REQUEST_URL);
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Tramo>> loader, List<Tramo> tramos) {
+        // If there is a valid list of {@link Tramo}s, then add them to the adapter's
+        // data set. This will trigger the ListView to update.
+        if (tramos != null && !tramos.isEmpty()) {
+            for (Tramo t : tramos) {
+                Log.d("My array list content: ", t.getId());
+            }
+            updateUi(tramos);
+        } else return;
     }
 
     private void updateUi(List<Tramo> tramos) {
@@ -123,14 +156,14 @@ public class MapFragmentActivity
 
                     // obtener el objeto Tramo de esta polilinea
                     Tramo mTramo = (Tramo) polyline.getTag();
-                    Log.d("Tramo detalles:",mTramo.convierteACadena());
+                    Log.d("Tramo detalles:", mTramo.convierteACadena());
                     //de la pollilinea obtener sus corrdenadas y poner el marcador en la primera coordenada
                     LatLng posicion = polyline.getPoints().get(0);
                     Marker markerDePolilinea = mMap.addMarker(new MarkerOptions().position(posicion).alpha(0));
                     //creando el infowindow
                     //primero las especificaciones del marker
                     InfoWindow.MarkerSpecification markerSpec =
-                            new InfoWindow.MarkerSpecification(1,1);
+                            new InfoWindow.MarkerSpecification(1, 1);
                     //ahora el infowindow de tipo form fragment
                     FormFragment formFragment = FormFragment.newInstance(mTramo.getId(),
                             mTramo.getOBJECTID_1(),
@@ -142,7 +175,7 @@ public class MapFragmentActivity
                             mTramo.getShape_Leng(),
                             mTramo.getProyId(),
                             mTramo.getIdSubproyecto()
-                            );
+                    );
                     formWindow = new InfoWindow(markerDePolilinea, markerSpec, formFragment);
 
                     infoWindowManager.toggle(formWindow, true);
@@ -153,30 +186,12 @@ public class MapFragmentActivity
             e.printStackTrace();
         }
 
-    }
 
-    @Override
-    public Loader<List<Tramo>> onCreateLoader(int i, Bundle bundle) {
-        return new TramoLoader(this, TRAMO_REQUEST_URL);
-
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<Tramo>> loader, List<Tramo> tramos) {
-
-        // If there is a valid list of {@link Tramo}s, then add them to the adapter's
-        // data set. This will trigger the ListView to update.
-        if (tramos != null && !tramos.isEmpty()) {
-            for (Tramo t : tramos) {
-                Log.d("My array list content: ", t.getId());
-            }
-            updateUi(tramos);
-        } else return;
     }
 
     @Override
     public void onLoaderReset(Loader<List<Tramo>> loader) {
-    }
 
+    }
 
 }
