@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/proy_id"
-            android:layout_width="42dp"
+            android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_gravity="center_vertical"
             android:gravity="center"
@@ -25,20 +25,17 @@
 
         <TextView
             android:id="@+id/proy_sisin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="72dp"
+            android:layout_height="36dp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
             android:gravity="center"
-            tools:text="456-45" />
+            tools:text="456 - 4564" />
 
         <TextView
             android:id="@+id/proy_descrip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:gravity="center"
             tools:text="yubore" />
 
     </LinearLayout>

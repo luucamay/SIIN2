@@ -15,6 +15,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="Id"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="72dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="SISIN"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Descripción"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
