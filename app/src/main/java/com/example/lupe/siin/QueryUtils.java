@@ -334,9 +334,15 @@ public final class QueryUtils {
                 int id = currentProyecto.getInt("proyId");
                 String sisin = currentProyecto.getString("proySISIN");
                 String descrip = currentProyecto.getString("proyDescrip");
+                /*float longitud = (float) currentProyecto.getDouble("proyLong");
+                String estadoProyecto = currentProyecto.getString("estado_proyecto");
+                String tipoProyecto = currentProyecto.getString("tipo_proyecto");*/
+                float longitud = 12;
+                String estadoProyecto = "en proceso";
+                String tipoProyecto = "de tipo loco";
                 // Create a new {@link Proyecto} object with the id, sisin, descrip,
                 // and url from the JSON response.
-                Proyecto proyectoObjeto = new Proyecto(id, sisin, descrip);
+                Proyecto proyectoObjeto = new Proyecto(id, sisin, descrip, longitud, estadoProyecto, tipoProyecto);
 
                 // Add the new {@link Tramo} to the list of tramos.
                 proyectos.add(proyectoObjeto);

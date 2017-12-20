@@ -1,14 +1,16 @@
 package com.example.lupe.siin;
 
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.app.LoaderManager;
-import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,20 +22,25 @@ public class ProyectosActivity extends AppCompatActivity
 
     private static final String LOG_TAG = ProyectosActivity.class.getName();
 
-    /** URL for earthquake data from the USGS dataset */
+    private String request_url =
+            "http://marte.abc.gob.bo/webService/proyectos.php/lista_proyectos";
+
     private static final String PROYECTO_REQUEST_URL =
             "http://marte.abc.gob.bo/webService/proyectos.php/lista_proyectos";
 
-    /**
-     * Constant value for the earthquake loader ID. We can choose any integer.
-     * This really only comes into play if you're using multiple loaders.
-     */
-    private static final int PROYECTO_LOADER_ID = 1;
+    private static final String BUSCAR_PROYECTO_REQUEST_URL =
+            "http://marte.abc.gob.bo/webService/proyectos.php/search_proyecto/";
 
-    /** Adapter for the list of earthquakes */
+    private int PROYECTO_LOADER_ID = 1;
+
+    /**
+     * Adapter for the list of earthquakes
+     */
     private ProyectoAdapter mAdapter;
 
-    /** TextView that is displayed when the list is empty */
+    /**
+     * TextView that is displayed when the list is empty
+     */
     private TextView mEmptyStateTextView;
 
     @Override
@@ -105,7 +112,8 @@ public class ProyectosActivity extends AppCompatActivity
     @Override
     public Loader<List<Proyecto>> onCreateLoader(int i, Bundle bundle) {
         // Create a new loader for the given URL
-        return new ProyectoLoader(this, PROYECTO_REQUEST_URL);
+        Log.d("loader",request_url);
+        return new ProyectoLoader(this, request_url);
     }
 
     @Override
@@ -125,12 +133,24 @@ public class ProyectosActivity extends AppCompatActivity
         if (proyectos != null && !proyectos.isEmpty()) {
             mAdapter.addAll(proyectos);
         }
+        request_url = PROYECTO_REQUEST_URL;
     }
 
     @Override
     public void onLoaderReset(Loader<List<Proyecto>> loader) {
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
+        request_url = PROYECTO_REQUEST_URL;
+    }
+
+    public void buscarProyecto(View view) {
+        EditText editText = (EditText) findViewById(R.id.textoBuscado);
+        String textoBuscado = editText.getText().toString();
+        LoaderManager loaderManager = getLoaderManager();
+        request_url = BUSCAR_PROYECTO_REQUEST_URL + "" + textoBuscado;
+        PROYECTO_LOADER_ID ++;
+        loaderManager.initLoader(PROYECTO_LOADER_ID, null, this);
+
     }
 }
 

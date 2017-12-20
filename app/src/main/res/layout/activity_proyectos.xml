@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.lupe.siin.ProyectosActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -20,32 +20,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:text="Id"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/textoBuscado"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textAutoComplete" />
 
-            <TextView
-                android:layout_width="72dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:text="SISIN"
-                android:textSize="16sp" />
-
-            <TextView
+            <ImageButton
+                android:id="@+id/imageButtonSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="Descripción"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:paddingHorizontal="32dp"
+                android:onClick="buscarProyecto"
+                app:srcCompat="@android:drawable/ic_menu_search" />
 
         </LinearLayout>
 
@@ -53,6 +43,7 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
             android:divider="@null"
             android:dividerHeight="0dp"
             android:orientation="vertical" />
