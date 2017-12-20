@@ -1,5 +1,6 @@
 package com.example.lupe.siin;
 
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -333,7 +334,7 @@ public final class QueryUtils {
 
                 int id = currentProyecto.getInt("proyId");
                 String sisin = currentProyecto.getString("proySISIN");
-                String descrip = currentProyecto.getString("proyDescrip");
+                String descrip = String.valueOf(Html.fromHtml(currentProyecto.getString("proyDescrip")));
                 /*float longitud = (float) currentProyecto.getDouble("proyLong");
                 String estadoProyecto = currentProyecto.getString("estado_proyecto");
                 String tipoProyecto = currentProyecto.getString("tipo_proyecto");*/

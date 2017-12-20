@@ -112,7 +112,7 @@ public class ProyectosActivity extends AppCompatActivity
     @Override
     public Loader<List<Proyecto>> onCreateLoader(int i, Bundle bundle) {
         // Create a new loader for the given URL
-        Log.d("loader",request_url);
+        Log.d("loader", request_url);
         return new ProyectoLoader(this, request_url);
     }
 
@@ -148,9 +148,8 @@ public class ProyectosActivity extends AppCompatActivity
         String textoBuscado = editText.getText().toString();
         LoaderManager loaderManager = getLoaderManager();
         request_url = BUSCAR_PROYECTO_REQUEST_URL + "" + textoBuscado;
-        PROYECTO_LOADER_ID ++;
+        PROYECTO_LOADER_ID++;
         loaderManager.initLoader(PROYECTO_LOADER_ID, null, this);
-
     }
 }
 
