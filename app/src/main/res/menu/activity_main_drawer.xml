@@ -8,17 +8,11 @@
             android:id="@+id/resumen_general"
             android:title="Resumen General ABC" />
         <item
-            android:id="@+id/ejecucion_regional"
-            android:title="Ejecución por Regional" />
-        <item
-            android:id="@+id/ejecucion_proyecto"
-            android:title="Ejecución por Proyecto" />
-        <item
-            android:id="@+id/proyectos_priorizados"
-            android:title="Proyectos Priorizados" />
-        <item
             android:id="@+id/maps"
-            android:title="Mapa Con Rutas y Puntos" />
+            android:title="Mapa General" />
+        <item
+            android:id="@+id/lista_proyectos"
+            android:title="Lista de proyectos" />
     </group>
 
 </menu>

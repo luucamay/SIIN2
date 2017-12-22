@@ -95,20 +95,18 @@ public class MainActivity extends AppCompatActivity
             transaction.addToBackStack(null);
             transaction.commit();
 
-        } else if (id == R.id.ejecucion_regional) {
-            ProyectoFragment proyectoFragment = new ProyectoFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.contentMain, proyectoFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else if (id == R.id.ejecucion_proyecto) {
-
         } else if (id == R.id.maps) {
             MapGeneralFragment mapGeneralFragment = new MapGeneralFragment();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.contentMain, mapGeneralFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else if (id == R.id.lista_proyectos) {
+            ProyectoFragment proyectoFragment = new ProyectoFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.contentMain, proyectoFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         }
