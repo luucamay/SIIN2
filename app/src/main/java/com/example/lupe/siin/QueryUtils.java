@@ -254,14 +254,14 @@ public final class QueryUtils {
 
                 int objectid_1 = propiedades.getInt("OBJECTID_1");
                 int objectid = propiedades.getInt("OBJECTID");
-                float distancia = (float) propiedades.getDouble("Distancia");
+                float distancia = (float) propiedades.getDouble("DISTANCIA");
                 int objectid_2 = propiedades.getInt("OBJECTID_2");
-                String poblacion = propiedades.getString("Pob");
-                String tramoPropiedad = propiedades.getString("Tramo");
-                float shape_leng = (float) propiedades.getDouble("Shape_Leng");
-                String color = propiedades.getString("color");
-                int proyId = propiedades.getInt("proyId");
-                int idSubproyecto = propiedades.getInt("idSubproyecto");
+                String poblacion = propiedades.getString("POB");
+                String tramoPropiedad = propiedades.getString("TRAMO");
+                float shape_leng = (float) propiedades.getDouble("SHAPE_LENG");
+                String color = propiedades.getString("COLOR");
+                int proyId = propiedades.getInt("PROYECTO");
+                int idSubproyecto = propiedades.getInt("SUBPROYECT");
                 // Create a new {@link Tramo} object with the magnitude, location, time,
                 // and url from the JSON response.
                 Tramo tramoObjeto = new Tramo(id, latLngArrayList, objectid_1, objectid, distancia, objectid_2, poblacion, tramoPropiedad, shape_leng,

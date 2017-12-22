@@ -102,7 +102,12 @@ public class MainActivity extends AppCompatActivity
             startActivity(myIntent);
 
         } else if (id == R.id.ejecucion_proyecto) {
-
+            ProyectoFragment proyectoFragment = new ProyectoFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.contentMain, proyectoFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         } else if (id == R.id.maps) {
             MapGeneralFragment mapGeneralFragment = new MapGeneralFragment();
             FragmentManager manager = getSupportFragmentManager();
