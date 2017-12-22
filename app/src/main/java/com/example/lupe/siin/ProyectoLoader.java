@@ -5,7 +5,6 @@ package com.example.lupe.siin;
  */
 
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  * Loads a list of proyectos by using an AsyncTask to perform the
  * network request to the given URL.
  */
-public class ProyectoLoader extends AsyncTaskLoader<List<Proyecto>> {
+public class ProyectoLoader extends android.support.v4.content.AsyncTaskLoader<List<Proyecto>> {
 
     /**
      * Tag for log messages

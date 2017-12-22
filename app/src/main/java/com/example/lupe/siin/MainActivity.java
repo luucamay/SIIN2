@@ -1,6 +1,5 @@
 package com.example.lupe.siin;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -97,17 +96,14 @@ public class MainActivity extends AppCompatActivity
             transaction.commit();
 
         } else if (id == R.id.ejecucion_regional) {
-            //haciendo un intent para abrir otra activity
-            Intent myIntent = new Intent(this, ProyectosActivity.class);
-            startActivity(myIntent);
-
-        } else if (id == R.id.ejecucion_proyecto) {
             ProyectoFragment proyectoFragment = new ProyectoFragment();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.contentMain, proyectoFragment);
             transaction.addToBackStack(null);
             transaction.commit();
+        } else if (id == R.id.ejecucion_proyecto) {
+
         } else if (id == R.id.maps) {
             MapGeneralFragment mapGeneralFragment = new MapGeneralFragment();
             FragmentManager manager = getSupportFragmentManager();

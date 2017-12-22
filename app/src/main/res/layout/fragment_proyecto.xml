@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingHorizontal="32dp"
-                android:onClick="buscarProyecto"
                 app:srcCompat="@android:drawable/ic_menu_search" />
 
         </LinearLayout>
