@@ -6,13 +6,18 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/resumen_general"
-            android:title="Resumen General ABC" />
+            android:icon="?android:attr/actionModeWebSearchDrawable"
+            android:title="Resumen General ABC"
+            tools:targetApi="lollipop" />
         <item
             android:id="@+id/maps"
+            android:icon="@drawable/svg_map"
             android:title="Mapa General" />
         <item
             android:id="@+id/lista_proyectos"
-            android:title="Lista de proyectos" />
+            android:icon="?android:attr/actionModeFindDrawable"
+            android:title="Lista de proyectos"
+            tools:targetApi="lollipop" />
     </group>
 
 </menu>
