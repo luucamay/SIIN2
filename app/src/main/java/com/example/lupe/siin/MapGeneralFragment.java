@@ -122,9 +122,6 @@ public class MapGeneralFragment extends Fragment implements
         // If there is a valid list of {@link Tramo}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (tramos != null && !tramos.isEmpty()) {
-            for (Tramo t : tramos) {
-                Log.d("My array list content: ", t.getId());
-            }
             updateUi(tramos);
         } else return;
     }
@@ -138,12 +135,13 @@ public class MapGeneralFragment extends Fragment implements
                 PolylineOptions polylineOptions = new PolylineOptions();
                 polylineOptions.addAll(tramo.getCoordenadas())
                         .width(20)
-                        .color(Color.parseColor("#" + tramo.getColor()))
+                        .color(Color.parseColor(tramo.getColor()))
                         .clickable(true);
                 //aca añade la polilinea al mapa
                 mPolyline = mMap.addPolyline(polylineOptions);
                 //aca enlaza el objeto tramo con la polilinea
                 mPolyline.setTag(tramo);
+                Log.d("polilinea asignada",tramo.convierteACadena());
             }
             // Add a listener for polyline clicks that changes the clicked polyline's color.
             mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
@@ -183,6 +181,7 @@ public class MapGeneralFragment extends Fragment implements
             });
 
         } catch (Exception e) {
+            Log.d("updateUi", e.getMessage());
             e.printStackTrace();
         }
 

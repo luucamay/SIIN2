@@ -6,19 +6,18 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/resumen_general"
-            android:title="Resumen General ABC" />
-        <item
-            android:id="@+id/ejecucion_regional"
-            android:title="Ejecución por Regional" />
-        <item
-            android:id="@+id/ejecucion_proyecto"
-            android:title="Ejecución por Proyecto" />
-        <item
-            android:id="@+id/proyectos_priorizados"
-            android:title="Proyectos Priorizados" />
+            android:icon="?android:attr/actionModeWebSearchDrawable"
+            android:title="Resumen General ABC"
+            tools:targetApi="lollipop" />
         <item
             android:id="@+id/maps"
-            android:title="Mapa Con Rutas y Puntos" />
+            android:icon="@drawable/svg_map"
+            android:title="Mapa General" />
+        <item
+            android:id="@+id/lista_proyectos"
+            android:icon="?android:attr/actionModeFindDrawable"
+            android:title="Lista de proyectos"
+            tools:targetApi="lollipop" />
     </group>
 
 </menu>

@@ -12,13 +12,9 @@ import android.widget.TextView;
 public class FormFragment extends Fragment {
 
     private TextView midTramo;
-    private TextView mobjectid1;
-    private TextView mobjectid;
-    private TextView mobjectid2;
     private TextView mdistancia;
     private TextView mpoblacion;
     private TextView mtramo;
-    private TextView mshapeleng;
     private TextView mproyid;
     private TextView midsubproyecto;
 
@@ -44,17 +40,10 @@ public class FormFragment extends Fragment {
         String sIdTramo = getArguments().getString("tIdTramo", "");
         midTramo.setText(midTramo.getText().toString() + " " + sIdTramo);
 
-        mobjectid = (TextView) view.findViewById(R.id.objectid);
         int sobjectid = getArguments().getInt("tOBJECTID", 0);
-        mobjectid.setText(mobjectid.getText().toString() + " " + sobjectid);
-
-        mobjectid1 = (TextView) view.findViewById(R.id.objectid_1);
         int sobjectid1 = getArguments().getInt("tOBJECTID_1", 0);
-        mobjectid1.setText(mobjectid1.getText().toString() + " " + sobjectid1);
-
-        mobjectid2 = (TextView) view.findViewById(R.id.objectid_2);
         int sobjectid2 = getArguments().getInt("tOBJECTID_2", 0);
-        mobjectid2.setText(mobjectid2.getText().toString() + " " + sobjectid2);
+        float sshapeleng = getArguments().getFloat("tShape_Leng", 0);
 
         mdistancia = (TextView) view.findViewById(R.id.distancia);
         float sdistancia = getArguments().getFloat("tDistancia", 0);
@@ -67,10 +56,6 @@ public class FormFragment extends Fragment {
         mtramo = (TextView) view.findViewById(R.id.tramo);
         String stramo = getArguments().getString("tTramo", "");
         mtramo.setText(mtramo.getText().toString() + " " + stramo);
-
-        mshapeleng = (TextView) view.findViewById(R.id.shapeLeng);
-        float sshapeleng = getArguments().getFloat("tShape_Leng", 0);
-        mshapeleng.setText(mshapeleng.getText().toString() + " " + sshapeleng);
 
         mproyid = (TextView) view.findViewById(R.id.proyId);
         final int sproyid = getArguments().getInt("tProyId", 0);

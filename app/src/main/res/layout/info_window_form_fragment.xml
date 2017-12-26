@@ -16,38 +16,17 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/objectid_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/idTramo"
-        android:text="Object id 1:" />
-
-    <TextView
-        android:id="@+id/objectid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/objectid_1"
-        android:text="Object id:" />
-
-    <TextView
         android:id="@+id/distancia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/objectid"
+        android:layout_below="@id/idTramo"
         android:text="Distancia:" />
-
-    <TextView
-        android:id="@+id/objectid_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/distancia"
-        android:text="Object id 2:" />
 
     <TextView
         android:id="@+id/poblacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/objectid_2"
+        android:layout_below="@id/distancia"
         android:text="Población:" />
 
     <TextView
@@ -58,17 +37,10 @@
         android:text="Tramo:" />
 
     <TextView
-        android:id="@+id/shapeLeng"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tramo"
-        android:text="Shape Leng:" />
-
-    <TextView
         android:id="@+id/proyId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shapeLeng"
+        android:layout_below="@id/tramo"
         android:text="Proy id:" />
 
     <TextView

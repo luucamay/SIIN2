@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Este es el que controla el contenido de la pantalla
+        // Este es el que controla el contenido del menu laterla
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -95,15 +95,18 @@ public class MainActivity extends AppCompatActivity
             transaction.addToBackStack(null);
             transaction.commit();
 
-        } else if (id == R.id.ejecucion_regional) {
-
-        } else if (id == R.id.ejecucion_proyecto) {
-
         } else if (id == R.id.maps) {
             MapGeneralFragment mapGeneralFragment = new MapGeneralFragment();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.contentMain, mapGeneralFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else if (id == R.id.lista_proyectos) {
+            ProyectoFragment proyectoFragment = new ProyectoFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.contentMain, proyectoFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         }

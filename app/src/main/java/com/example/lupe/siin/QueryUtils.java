@@ -1,5 +1,6 @@
 package com.example.lupe.siin;
 
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -85,27 +86,6 @@ public final class QueryUtils {
     private QueryUtils() {
     }
 
-    /**
-     * Query the USGS dataset and return a list of {@link Tramo} objects.
-     */
-    public static List<Tramo> fetchTramoData(String requestUrl) {
-        // Create URL object
-        URL url = createUrl(requestUrl);
-
-        // Perform HTTP request to the URL and receive a JSON response back
-        String jsonResponse = null;
-        try {
-            jsonResponse = makeHttpRequest(url);
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
-        }
-
-        // Extract relevant fields from the JSON response and create a list of {@link Tramo}s
-        List<Tramo> tramos = extractFeatureFromJson(jsonResponse);
-
-        // Return the list of {@link Tramo}s
-        return tramos;
-    }
 
     /**
      * Returns new URL object from the given string URL.
@@ -207,6 +187,28 @@ public final class QueryUtils {
     }
 
     /**
+     * Query the USGS dataset and return a list of {@link Tramo} objects.
+     */
+    public static List<Tramo> fetchTramoData(String requestUrl) {
+        // Create URL object
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        // Extract relevant fields from the JSON response and create a list of {@link Tramo}s
+        List<Tramo> tramos = extractFeatureFromJson(jsonResponse);
+
+        // Return the list of {@link Tramo}s
+        return tramos;
+    }
+
+    /**
      * Return a list of {@link Tramo} objects that has been built up from
      * parsing the given JSON response.
      */
@@ -252,14 +254,14 @@ public final class QueryUtils {
 
                 int objectid_1 = propiedades.getInt("OBJECTID_1");
                 int objectid = propiedades.getInt("OBJECTID");
-                float distancia = (float) propiedades.getDouble("Distancia");
+                float distancia = (float) propiedades.getDouble("DISTANCIA");
                 int objectid_2 = propiedades.getInt("OBJECTID_2");
-                String poblacion = propiedades.getString("Pob");
-                String tramoPropiedad = propiedades.getString("Tramo");
-                float shape_leng = (float) propiedades.getDouble("Shape_Leng");
-                String color = propiedades.getString("color");
-                int proyId = propiedades.getInt("proyId");
-                int idSubproyecto = propiedades.getInt("idSubproyecto");
+                String poblacion = propiedades.getString("POB");
+                String tramoPropiedad = propiedades.getString("TRAMO");
+                float shape_leng = (float) propiedades.getDouble("SHAPE_LENG");
+                String color = propiedades.getString("COLOR");
+                int proyId = propiedades.getInt("PROYECTO");
+                int idSubproyecto = propiedades.getInt("SUBPROYECT");
                 // Create a new {@link Tramo} object with the magnitude, location, time,
                 // and url from the JSON response.
                 Tramo tramoObjeto = new Tramo(id, latLngArrayList, objectid_1, objectid, distancia, objectid_2, poblacion, tramoPropiedad, shape_leng,
@@ -277,6 +279,84 @@ public final class QueryUtils {
         }
         // Return the list of tramos
         return tramos;
+    }
+
+    /**
+     * Query the USGS dataset and return a list of {@link Proyecto} objects.
+     */
+    public static List<Proyecto> fetchProyectoData(String requestUrl) {
+        // Create URL object
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        // Extract relevant fields from the JSON response and create a list of {@link Tramo}s
+        List<Proyecto> proyectos = extractProyectoFeatureFromJson(jsonResponse);
+
+        // Return the list of {@link Proyecto}
+        return proyectos;
+    }
+
+    /**
+     * Return a list of {@link Tramo} objects that has been built up from
+     * parsing the given JSON response.
+     */
+    private static List<Proyecto> extractProyectoFeatureFromJson(String proyectoJSON) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(proyectoJSON)) {
+            return null;
+        }
+
+        List<Proyecto> proyectos = new ArrayList<>();
+        // Try to parse the JSON response string. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+
+        try {
+            // Extract the JSONArray associated with the key called "features",
+            // which represents a list of features (or tramos).
+            JSONObject baseJsonResponse = new JSONObject(proyectoJSON);
+
+            // Extract the JSONArray associated with the key called "features",
+            // which represents a list of features (or tramos).
+            JSONArray proyectoArray = baseJsonResponse.getJSONArray("data");
+
+            // For each tramo in the tramoArray, create an {@link Tramo} object
+            for (int i = 0; i < proyectoArray.length(); i++) {
+                // Get a single tramo at position i within the list of tramos
+                JSONObject currentProyecto = proyectoArray.getJSONObject(i);
+
+                int id = currentProyecto.getInt("proyId");
+                String sisin = currentProyecto.getString("proySISIN");
+                String descrip = String.valueOf(Html.fromHtml(currentProyecto.getString("proyDescrip")));
+                /*float longitud = (float) currentProyecto.getDouble("proyLong");
+                String estadoProyecto = currentProyecto.getString("estado_proyecto");
+                String tipoProyecto = currentProyecto.getString("tipo_proyecto");*/
+                float longitud = 12;
+                String estadoProyecto = "en proceso";
+                String tipoProyecto = "de tipo loco";
+                // Create a new {@link Proyecto} object with the id, sisin, descrip,
+                // and url from the JSON response.
+                Proyecto proyectoObjeto = new Proyecto(id, sisin, descrip, longitud, estadoProyecto, tipoProyecto);
+
+                // Add the new {@link Tramo} to the list of tramos.
+                proyectos.add(proyectoObjeto);
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e(LOG_TAG, "Problem parsing the tramo JSON results", e);
+        }
+        // Return the list of tramos
+        return proyectos;
     }
 
 }
