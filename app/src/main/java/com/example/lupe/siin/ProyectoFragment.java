@@ -1,13 +1,14 @@
 package com.example.lupe.siin;
 
 
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,19 +74,15 @@ public class ProyectoFragment
         proyectoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                /*
+
                 // Find the current proyecto that was clicked on
                 Proyecto currentProyecto = mAdapter.getItem(position);
 
-                // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri proyectoUri = Uri.parse(currentProyecto.getUrl());
-
-                // Create a new intent to view the proyecto URI
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, proyectoUri);
-
-                // Send the intent to launch a new activity
-                startActivity(websiteIntent);
-                */
+                int currentProyId = currentProyecto.getProyId();
+                //haciendo un intent para abrir otra activity
+                Intent myIntent = new Intent(getContext(), FichaActivity.class);
+                myIntent.putExtra("tProyId",currentProyId);
+                startActivity(myIntent);
             }
         });
 
